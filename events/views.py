@@ -11,7 +11,7 @@ def register_event(request):
         if form.is_valid():
             form.save()
         messages.success(request,"Event Register Successfully")
-        return redirect('create-event')
+        return redirect('dashboard')
     else:
         form = CreateEventFrom()
     return render(request,'form.html',{'form':form})
@@ -37,6 +37,10 @@ def register_participant(request):
     else:
         form = RegisterParticipantFrom()
     return render(request,'form.html',{'form':form})
+
+
+def admin_dashboard(request):
+    return render(request,'dashboard.html')
 
 def test(request):
     return render(request,'dashboard.html')

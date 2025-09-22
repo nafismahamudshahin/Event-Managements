@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> {% endcomment %}
     <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
@@ -18,10 +17,10 @@
                     <p class="text-sm text-gray-400">Monitor your events and Track participant engagement</p>
                 </div>
                 <div class="right_nav">
-                    <button class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold">
+                    <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
                         <i class="fa-solid fa-plus"></i>
-                        <span>Create Event</span>
-                    </button>
+                        <span >Create Event</span>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -85,7 +84,7 @@
                 <!-- Events -->
                 <div class="events_show_cards mt-5 mb-3 grid gap-4">
                     <!-- 1 -->
-                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
+                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
                         <div class="flex items-center">
                             <div class="flex flex-col">
                                 <h3 class="font-semibold text-white">Tech Conference 2024</h3>
