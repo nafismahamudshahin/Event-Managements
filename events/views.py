@@ -39,4 +39,4 @@ def register_participant(request):
     return render(request,'form.html',{'form':form})
 
 def test(request):
-    return render(request,'test.html')
+    return render(request,'dashboard.html')

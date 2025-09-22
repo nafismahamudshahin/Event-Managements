@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> {% endcomment %}
+    <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-black">
+    <header>
+        <nav class="py-2">
+            <div class="container m-auto flex justify-between items-center">
+                <div class="left_nav text-white">
+                    <h1 class="text-3xl">Organizer Dashboard</h1>
+                    <p class="text-sm text-gray-400">Monitor your events and Track participant engagement</p>
+                </div>
+                <div class="right_nav">
+                    <button class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Create Event</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="hero_section container mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+            <!-- Total Participants -->
+            <div class="card flex-col rounded-lg p-5 shadow-lg  bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+                <div class="flex justify-between">
+                    <h3 class="mb-5 text-sm font-medium">Total Participants</h3>
+                    <i class="fa-solid fa-users text-2xl"></i>
+                </div>
+                <b class="text-2xl">1247</b>
+                <small class="block my-2 text-gray-400">Across all events</small>
+                <small class="block text-gray-400"><span class="text-green-500">+233</span> from last month</small>
+            </div>
+            <!-- Total Events -->
+            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+                <div class="flex justify-between">
+                    <h3 class="mb-5 text-sm font-medium">Total Events</h3>
+                    <i class="fa-regular fa-calendar text-2xl"></i>
+                </div>
+                <b class="text-2xl">56</b>
+                <small class="block my-2 text-gray-400">Across time events</small>
+                <small class="block text-gray-400">+6%</span> from last month</small>
+            </div>
+            <!-- upcoming events -->
+            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+                <div class="flex justify-between">
+                    <h3 class="mb-5 text-sm font-medium">Upcoming Events</h3>
+                    <i class="fa-regular fa-calendar-days text-2xl"></i>
+                </div>
+                <b class="text-2xl">13</b>
+                <small class="block my-2 text-gray-400">Next 30 days</small>
+                <small class="block text-gray-400">+16%</span> from last month</small>
+            </div>
+            <!-- Past Events -->
+            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+                <div class="flex justify-between">
+                    <h3 class="mb-5 text-sm font-medium">Past Events</h3>
+                    <i class="fa-regular fa-clock text-2xl"></i>
+                </div>
+                <b class="text-2xl">78</b>
+                <small class="block my-2 text-gray-400">Completed events</small>
+                <small class="block text-gray-400">+16%</span> from last month</small>
+            </div>
+            
+        </div>
+    </header>
+    <main>
+        <!-- show all Events -->
+        <section class="">
+            <div class="container m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
+                <div class="flex justify-between items-center text-white">
+                    <div class="font-semibold flex items-center gap-2">
+                        <i class="fa-regular fa-calendar"></i>
+                         <strong> Today's Events</strong>
+                    </div>
+                    <div>
+                        <button class="bg-stone-900 py-2 rounded-lg px-5 font-semibold">Show Today's Events</button>
+                    </div>
+                </div>
+                <!-- Events -->
+                <div class="events_show_cards mt-5 mb-3 grid gap-4">
+                    <!-- 1 -->
+                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
+                        <div class="flex items-center">
+                            <div class="flex flex-col">
+                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
+                                <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>09:00 AM</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>Convention Center</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>150 participants</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-white">
+                            <span class="">Technology</span>
+                            <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
+                            <a class="ice_btn">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a class="edit_btn">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a class="delete_btn">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
+                        <div class="flex items-center">
+                            <div class="flex flex-col">
+                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
+                                <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>09:00 AM</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>Convention Center</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>150 participants</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-white">
+                            <span class="">Technology</span>
+                            <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
+                            <a class="ice_btn">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a class="edit_btn">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a class="delete_btn">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
+                        <div class="flex items-center">
+                            <div class="flex flex-col ">
+                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
+                                <div class="flex items-center gap-4 text-sm  mt-1 text-gray-400">
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>09:00 AM</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>Convention Center</span>
+                                    </div>
+                                    <div class="flex gap-2 items-center ">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>150 participants</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-white">
+                            <span class="">Technology</span>
+                            <span class="bg-blue-500 rounded-lg text-white px-3">Upcoming</span>
+                            <a class="ice_btn">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a class="edit_btn">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a class="delete_btn">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
