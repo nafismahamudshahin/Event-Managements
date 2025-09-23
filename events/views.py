@@ -1,5 +1,8 @@
 from django.shortcuts import render ,redirect
+from django.db.models import Q , Count
 from django.contrib import messages
+from django.utils import timezone 
+from datetime import datetime
 # import Register form from from.py:
 from events.forms import CreateEventFrom , MakeCategoryFrom , RegisterParticipantFrom
 
@@ -42,12 +45,26 @@ def register_participant(request):
 
 def admin_dashboard(request):
     events = Event.objects.all()
+    now = timezone.localtime(timezone.now())
+    counts_events = events.aggregate(
+        total=Count('id'),
+        upcoming=Count('id', filter=Q(date__gt=now.date()) | Q(date=now.date(), time__gt=now.time())),
+        past = Count('id', filter = Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
+    )
 
-    events_cnt = events.count()
-    print(events_cnt)
+    type = request.GET.get('type',"all")
+
+
+    if type =="todayevents":
+        events = events.filter(Q(date = now.date(), time__gt = now.time()))
+    elif type == "past":
+        events = events.filter(Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
+    elif type == "upcoming":
+        events = events.filter(Q(date__gt=now.date()) | Q(date=now.date(),time__gt = now.time()))
+
     context ={
         "events":events,
-        'total_events': events_cnt,
+        'count':counts_events
     }
     return render(request,'dashboard.html',context)
 

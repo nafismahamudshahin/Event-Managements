@@ -36,36 +36,41 @@
                 <small class="block text-gray-400"><span class="text-green-500">+233</span> from last month</small>
             </div>
             <!-- Total Events -->
+            <a href="{% url 'dashboard' %}?type=all">
             <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
                 <div class="flex justify-between">
                     <h3 class="mb-5 text-sm font-medium">Total Events</h3>
                     <i class="fa-regular fa-calendar text-2xl"></i>
                 </div>
-                <b class="text-2xl">{{total_events}}</b>
+                <b class="text-2xl">{{count.total}}</b>
                 <small class="block my-2 text-gray-400">Across time events</small>
                 <small class="block text-gray-400">+6%</span> from last month</small>
             </div>
+            </a>
             <!-- upcoming events -->
+            <a href="{% url 'dashboard' %}?type=upcoming">
             <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
                 <div class="flex justify-between">
                     <h3 class="mb-5 text-sm font-medium">Upcoming Events</h3>
                     <i class="fa-regular fa-calendar-days text-2xl"></i>
                 </div>
-                <b class="text-2xl">13</b>
+                <b class="text-2xl">{{count.upcoming}}</b>
                 <small class="block my-2 text-gray-400">Next 30 days</small>
                 <small class="block text-gray-400">+16%</span> from last month</small>
             </div>
+            </a>
             <!-- Past Events -->
+            <a href="{% url 'dashboard' %}?type=past">
             <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
                 <div class="flex justify-between">
                     <h3 class="mb-5 text-sm font-medium">Past Events</h3>
                     <i class="fa-regular fa-clock text-2xl"></i>
                 </div>
-                <b class="text-2xl">78</b>
+                <b class="text-2xl">{{count.past}}</b>
                 <small class="block my-2 text-gray-400">Completed events</small>
                 <small class="block text-gray-400">+16%</span> from last month</small>
             </div>
-            
+            </a>
         </div>
     </header>
     <main>
@@ -78,119 +83,51 @@
                          <strong> Today's Events</strong>
                     </div>
                     <div>
-                        <button class="bg-stone-900 py-2 rounded-lg px-5 font-semibold">Show Today's Events</button>
+                        <a href="{% url 'dashboard'%}?type=todayevents"  class="bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">Show Today's Events</a>
                     </div>
                 </div>
                 <!-- Events -->
                 <div class="events_show_cards mt-5 mb-3 grid gap-4">
-                    <!-- 1 -->
-                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
-                        <div class="flex items-center">
-                            <div class="flex flex-col">
-                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
-                                <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <span>09:00 AM</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <span>Convention Center</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-solid fa-people-group"></i>
-                                        <span>150 participants</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 text-white">
-                            <span class="">Technology</span>
-                            <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
-                            <a class="ice_btn">
-                                <i class="fa-regular fa-eye"></i>
-                            </a>
-                            <a class="edit_btn">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
-                            <a class="delete_btn">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
-                        <div class="flex items-center">
-                            <div class="flex flex-col">
-                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
-                                <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <span>09:00 AM</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <span>Convention Center</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-solid fa-people-group"></i>
-                                        <span>150 participants</span>
+                    {% if events %}
+                        {% for event in events %}
+                            <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
+                                <div class="flex items-center">
+                                    <div class="flex flex-col">
+                                        <h3 class="font-semibold text-white">{{event.name}}</h3>
+                                        <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
+                                            <div class="flex gap-2 items-center ">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>{{event.time}}</span>
+                                                 <span>{{event.date}}</span>
+                                            </div>
+                                            <div class="flex gap-2 items-center">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <span>{{event.location}}</span>
+                                            </div>
+                                            <div class="flex gap-2 items-center ">
+                                                <i class="fa-solid fa-people-group"></i>
+                                                <span>150 participants</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="flex items-center gap-4 text-white">
-                            <span class="">Technology</span>
-                            <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
-                            <a class="ice_btn">
-                                <i class="fa-regular fa-eye"></i>
-                            </a>
-                            <a class="edit_btn">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
-                            <a class="delete_btn">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent border border-neutral-900 hover:bg-stone-950">
-                        <div class="flex items-center">
-                            <div class="flex flex-col ">
-                                <h3 class="font-semibold text-white">Tech Conference 2024</h3>
-                                <div class="flex items-center gap-4 text-sm  mt-1 text-gray-400">
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <span>09:00 AM</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <span>Convention Center</span>
-                                    </div>
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-solid fa-people-group"></i>
-                                        <span>150 participants</span>
-                                    </div>
+                                <div class="flex items-center gap-4 text-white">
+                                    <span class="">Technology</span>
+                                    <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
+                                    <a class="ice_btn">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                    <a class="edit_btn">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a class="delete_btn">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 text-white">
-                            <span class="">Technology</span>
-                            <span class="bg-blue-500 rounded-lg text-white px-3">Upcoming</span>
-                            <a class="ice_btn">
-                                <i class="fa-regular fa-eye"></i>
-                            </a>
-                            <a class="edit_btn">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
-                            <a class="delete_btn">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 </div>
             </div>
