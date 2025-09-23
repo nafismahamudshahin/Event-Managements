@@ -26,7 +26,7 @@ def register_category(request):
         if form.is_valid():
             form.save()
         messages.success(request,"Category Register Successfully")
-        return redirect('create-category')
+        return redirect('dashboard')
     else:
         form = MakeCategoryFrom()
     return render(request,'form.html',{'form':form})
@@ -46,7 +46,7 @@ def register_participant(request):
 # This dashboard Render for Admin:
 def admin_dashboard(request):
     type = request.GET.get('type',"all")
-    events = Event.objects.all()
+    events = Event.objects.prefetch_related('category').all()
     now = timezone.localtime(timezone.now())
     counts_events = events.aggregate(
         total=Count('id'),
