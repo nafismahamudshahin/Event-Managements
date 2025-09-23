@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 # import model:
 from events.models import Event , Category , Participant
 
@@ -8,7 +9,7 @@ class StyledFormMixin:
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
 
-    default_classes = "border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+    default_classes = "border-2 bg-white text-black border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500 "
 
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
@@ -25,7 +26,7 @@ class StyledFormMixin:
                 })
             elif isinstance(field.widget, forms.SelectDateWidget):
                 field.widget.attrs.update({
-                    "class": "border-2 border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+                    "class": "border-2 bg-white border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
                 })
             elif isinstance(field.widget, forms.CheckboxSelectMultiple):
                 field.widget.attrs.update({
@@ -41,6 +42,11 @@ class CreateEventFrom(StyledFormMixin,forms.ModelForm):
         model = Event
         fields = "__all__"
 
+        widgets = {
+            "date": forms.SelectDateWidget,
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+        }
+
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
@@ -49,7 +55,7 @@ class MakeCategoryFrom(StyledFormMixin,forms.ModelForm):
     class Meta:
         model = Category
         fields = "__all__"
-    
+
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()

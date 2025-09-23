@@ -3,8 +3,9 @@ from django.contrib import messages
 # import Register form from from.py:
 from events.forms import CreateEventFrom , MakeCategoryFrom , RegisterParticipantFrom
 
+# import Model:
+from events.models import Event , Participant ,Category
 # Create your views here.
-
 def register_event(request):
     if request.method == "POST":
         form = CreateEventFrom(request.POST)
@@ -40,7 +41,15 @@ def register_participant(request):
 
 
 def admin_dashboard(request):
-    return render(request,'dashboard.html')
+    events = Event.objects.all()
+
+    events_cnt = events.count()
+    print(events_cnt)
+    context ={
+        "events":events,
+        'total_events': events_cnt,
+    }
+    return render(request,'dashboard.html',context)
 
 def test(request):
     return render(request,'dashboard.html')
