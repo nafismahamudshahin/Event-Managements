@@ -80,7 +80,7 @@
                 <div class="flex justify-between items-center text-white">
                     <div class="font-semibold flex items-center gap-2">
                         <i class="fa-regular fa-calendar"></i>
-                         <strong> Today's Events</strong>
+                        <strong>{{event_name}}</strong>
                     </div>
                     <div>
                         <a href="{% url 'dashboard'%}?type=todayevents"  class="bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">Show Today's Events</a>
@@ -121,7 +121,7 @@
                                     <a href="{% url 'edit-event' event.id %}" class="edit_btn">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <a class="delete_btn">
+                                    <a href="{% url 'delete-event' event.id %}" class="delete_btn">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </a>
                                 </div>

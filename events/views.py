@@ -53,17 +53,21 @@ def admin_dashboard(request):
         upcoming=Count('id', filter=Q(date__gt=now.date()) | Q(date=now.date(), time__gt=now.time())),
         past = Count('id', filter = Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
     )
-
+    event_name = "All Event's"
     if type =="todayevents":
         events = events.filter(Q(date = now.date(), time__gt = now.time()))
+        event_name = "Today's Events"
     elif type == "past":
         events = events.filter(Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
+        event_name = "Past Events"
     elif type == "upcoming":
         events = events.filter(Q(date__gt=now.date()) | Q(date=now.date(),time__gt = now.time()))
+        event_name = "UpComing Events"
 
     context ={
-        "events":events,
-        'count':counts_events
+        "events":events.order_by('date','time'),
+        'count':counts_events,
+        'event_name': event_name,
     }
     return render(request,'dashboard.html',context)
 
@@ -79,7 +83,11 @@ def editEventInfo(request,id):
         return redirect('dashboard')
     return render(request,'form.html',{'form':form})
 
-
+# Delete Event:
+def deleteEvent(request,id):
+    event = Event.objects.get(id=id)
+    event.delete()
+    return redirect('dashboard')
 
 def test(request):
     return render(request,'dashboard.html')
