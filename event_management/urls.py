@@ -9,3 +9,4 @@ urlpatterns = [
     path('',include('dashboard.urls')),
     path('',include('categories.urls')),
 ]+debug_toolbar_urls()
+
