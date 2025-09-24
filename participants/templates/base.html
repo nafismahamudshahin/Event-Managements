@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="bg-white shadow bg-gradient-to-r from-pink-100 via-pink-200 to-pink-200 min-h-screen">
+  <!-- Navbar -->
+  <nav class="py-5">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+      <!-- Logo -->
+      <div class="logo">
+        <h1 class="text-3xl font-bold">
+          <span class="text-rose-500">E</span>vent
+          <span class="text-rose-500">L</span>ab
+        </h1>
+      </div>
+
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex gap-8 items-center font-medium">
+        <li><a class="hover:text-rose-500 transition" href="#">HOME</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">ABOUT</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">EVENTS</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">SPEAKERS</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">PAGES</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">BLOG</a></li>
+        <li><a class="hover:text-rose-500 transition" href="#">CONTACT</a></li>
+        <li>
+          <a class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition" href="#">Get Ticket</a>
+        </li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-3xl focus:outline-none" id="menu-btn"> <i class="fa-solid fa-bars"></i> </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+      <ul class="flex flex-col gap-4 p-6 font-medium">
+        <li><a class="hover:text-rose-500" href="#">HOME</a></li>
+        <li><a class="hover:text-rose-500" href="#">ABOUT</a></li>
+        <li><a class="hover:text-rose-500" href="#">EVENTS</a></li>
+        <li><a class="hover:text-rose-500" href="#">SPEAKERS</a></li>
+        <li><a class="hover:text-rose-500" href="#">PAGES</a></li>
+        <li><a class="hover:text-rose-500" href="#">BLOG</a></li>
+        <li><a class="hover:text-rose-500" href="#">CONTACT</a></li>
+        <li>
+          <a class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition block text-center" href="#">Get Ticket</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+   <div class="">
+       <div class=" max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center px-4 py-12 gap-10 ">
+         <!-- Left -->
+         <div class="flex-1 space-y-6">
+           <div class="flex items-center gap-2">
+             <i class="fa-regular fa-calendar-days"></i>
+             <h3 class="text-rose-500 font-semibold">January 21, 2025</h3>
+           </div>
+           <h1 class="text-4xl md:text-6xl font-bold leading-tight"> EVENTS, MEETUPS & <span class="text-rose-500">CONFERENCES</span></h1>
+     
+           <div class="flex gap-3 text-gray-700 font-medium">
+             <div class="flex items-center gap-2">
+               <i class="fa-solid fa-chart-diagram"></i>
+                 <span>500 Seat sap</span>
+             </div>
+             <div class="flex items-center gap-2">
+               <i class="fa-solid fa-bullhorn"></i>
+               <span>10 Speaker</span>
+             </div>
+             <div class="flex items-center gap-2">
+               <i class="fa-solid fa-location-pin"></i>
+               <span>1356 Broadway, New York</span>
+             </div>
+           </div>
+     
+           <div class="flex gap-4 flex-wrap">
+             <a class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition" href="#">BOOK NOW</a>
+             <a class="px-6 py-3 bg-white rounded-lg font-semibold text-rose-500 border-2 border-rose-500 hover:bg-rose-500 hover:text-white transition" href="#">VIEW DETAILS</a>
+           </div>
+         </div>
+     
+         <!-- Right -->
+         <div class="flex-1">
+           <img class="w-full max-w-lg mx-auto" src="{% static 'images/hero-figure1.png' %} "alt=""/>
+         </div>
+       </div>
+   </div>
+</header>
+{% block content %}
+
+{% endblock content %}
+<footer class="bg-gray-900 text-gray-300 py-8 mt-10">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <!-- About Section -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">About Us</h2>
+      <p class="text-sm">
+        Event Management System helps you to create, manage and track all your events easily.  
+        Stay organized and make your events successful with us.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">Quick Links</h2>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-white transition">Home</a></li>
+        <li><a href="#" class="hover:text-white transition">Events</a></li>
+        <li><a href="#" class="hover:text-white transition">Categories</a></li>
+        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">Contact</h2>
+      <p class="text-sm">Email: support@nafis.com</p>
+      <p class="text-sm">Phone: +880 888999890</p>
+      <div class="flex space-x-4 mt-3">
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="text-center text-gray-500 text-sm border-t border-gray-700 mt-8 pt-4">
+    © 2025 Event Management System. All Rights Reserved.
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
