@@ -4,111 +4,97 @@
 <main>
     <!-- search events -->
     <section class="lg:w-[70%] mx-auto -mt-14">
-        <div class="container mx-auto bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row items-center gap-4 md:gap-6">
-            <!-- statr date -->
-            <input type="date" class="flex-1 px-5 py-3 border border-rose-500 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-400"/>
-
-            <!-- end Date -->
-            <input type="date" class="flex-1 px-5 py-3 border border-rose-500 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-400"/>
-
-            <!-- Category -->
-            <select class="flex-1 px-9 py-3 border border-rose-500 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-400">
-                <option>Category</option>
-                <option>All</option>
-                <option>Meetup</option>
-                <option>Workshop</option>
-            </select>
-
-            <!-- Search Button -->
+        <form class="container mx-auto bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row items-center gap-4 md:gap-6" method="POST" action="">
+            {% csrf_token %}
+            <input type="date" name="start_date" class="flex-1 px-5 py-3 border border-rose-500 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-400"/>
+            <input type="date" name="end_date"  class="flex-1 px-5 py-3 border border-rose-500 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-400"/>
             <button class="px-10 py-3 bg-rose-600 text-white rounded-full font-semibold hover:bg-rose-700 transition"> Search Now </button>
-        </div>
+        </form>
     </section>
     <!-- Filter Events: -->
+     {% if filter_events %}
+     <section class="mt-5 max-w-7xl mx-auto flex-col space-y-4">
+        <h1 class="text-2xl font-semibold">Search Results:</h1>
+        {% for event in filter_events %}
+        <div class="flex items-center justify-between p-4 shadow-xl  rounded-lg  bg-pink-300 hover:bg-gradient-to-r hover:from-pink-300 hover:to-rose-300">
+        <div class="flex items-center">
+            <div class="flex flex-col">
+            <h3 class="font-semibold text-lg text-gray-800">{{ event.name }}</h3>
+            <div class="flex flex-wrap items-center gap-4 text-sm mt-1">
+                <div class="flex gap-2 items-center">
+                <i class="fa-regular fa-clock text-rose-500"></i>
+                <span>{{ event.time }}</span>
+                <span>{{ event.date }}</span>
+                </div>
+                <div class="flex gap-2 items-center">
+                <i class="fa-solid fa-location-dot text-rose-500"></i>
+                <span>{{ event.location }}</span>
+                </div>
+
+                <!-- Participants -->
+                <div class="flex gap-2 items-center">
+                <i class="fa-solid fa-people-group text-rose-500"></i>
+                <span>150 participants</span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Right -->
+        <div class="flex items-center gap-4">
+            <a href="#" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">BOOK NOW</a>
+        </div>
+        </div>
+        {% endfor %}
+     </section>
+     {% endif %}
     <!-- Today Events Schedule -->
     <section class="mt-5 max-w-7xl mx-auto">
         <h3 class="title text-center text-3xl font-semibold text-rose-500">Schedule</h3>
         <h1 class="text-center text-4xl font-bold leading-tight">TODAY EVENT SCHEDULE</h1>
         <div class="text-center">
-            <span class="text-4xl text-rose-500">30 Sep 2025</span>
+            <span class="text-4xl text-rose-500">{{time}}</span>
         </div>
         <div class="all_events mt-5 flex-col space-y-4">
-            <div class="flex mx-auto border border-pink-700 rounded-lg overflow-hidden">
-                <!-- Left Section -->
-                <div class="bg-pink-700 text-white p-6 flex flex-col items-center justify-center w-1/3">
-                    <div class="text-xl font-bold mb-2">10.00 AM - 11.30 PM</div>
-                    <div class="text-lg mb-4">Room No - 01</div>
-                    <div class="text-lg font-bold">John Loganin</div>
-                    <div class="text-sm mb-4">Marketing</div>
-                    <div class="flex space-x-4 text-white text-xl">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-linkedin-in"></i>
-                    <i class="fa-brands fa-twitter"></i>
+            {% if today_events %}
+            {% for event in today_events %}
+                <div class="flex mx-auto border border-pink-700 rounded-lg overflow-hidden">
+                    <!-- Left Section -->
+                    <div class="bg-pink-700 text-white p-6 flex flex-col items-center justify-center w-1/3">
+                        <div class="text-xl font-bold mb-2">{{event.time}}- 11.30 PM</div>
+                        <div class="text-lg mb-4">Room No - {{event.id}}</div>
+                        <div class="text-lg font-bold">John Loganin</div>
+                        <div class="text-sm mb-4">Marketing</div>
+                        <div class="flex space-x-4 text-white text-xl">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        </div>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div class="bg-gray-100 p-6 w-3/5">
+                        <h2 class="text-xl font-bold text-gray-800 mb-3 leading-snug">
+                            {{event.name}}
+                        </h2>
+                        <p class="text-sm text-gray-600 mb-2">
+                            {{event.description}}
+                        </p>
+
+                        <div class="mb-2 font-bold text-pink-700">Topic</div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700">
+                        <div>✔ Color</div>
+                        <div>✔ Allignment</div>
+                        <div>✔ Graphic Design</div>
+                        <div>✔ Typography</div>
+                        <div>✔ Development</div>
+                        <div>✔ Web Design</div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Right Section -->
-                <div class="bg-gray-100 p-6 w-3/5">
-                    <h2 class="text-xl font-bold text-gray-800 mb-3 leading-snug">
-                        Nulla Nisl Tellus Hendrerit Nec Dignissim Pellentesqu Posu In Est Suspendisse Bibendum.
-                    </h2>
-                    <p class="text-sm text-gray-600 mb-2">
-                        Cras semper, massa vel aliquam luctus, eros odio tempor turpis, ac placerat metus tortor eget magna.
-                    </p>
-                    <p class="text-sm text-gray-600 mb-4">
-                        Donec mattis posuere pharetra. Donec vestibulum ornare velit ut sollicitudin ut sollicitudin.
-                    </p>
-
-                    <div class="mb-2 font-bold text-pink-700">Topic</div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700">
-                    <div>✔ Color</div>
-                    <div>✔ Allignment</div>
-                    <div>✔ Graphic Design</div>
-                    <div>✔ Typography</div>
-                    <div>✔ Development</div>
-                    <div>✔ Web Design</div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex mx-auto border border-pink-700 rounded-lg overflow-hidden">
-                <!-- Left Section -->
-                <div class="bg-pink-700 text-white p-6 flex flex-col items-center justify-center w-1/3">
-                    <div class="text-xl font-bold mb-2">10.00 AM - 11.30 PM</div>
-                    <div class="text-lg mb-4">Room No - 01</div>
-                    <div class="text-lg font-bold">John Loganin</div>
-                    <div class="text-sm mb-4">Marketing</div>
-                    <div class="flex space-x-4 text-white text-xl">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-linkedin-in"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    </div>
-                </div>
-
-                <!-- Right Section -->
-                <div class="bg-gray-100 p-6 w-3/5">
-                    <h2 class="text-xl font-bold text-gray-800 mb-3 leading-snug">
-                        Nulla Nisl Tellus Hendrerit Nec Dignissim Pellentesqu Posu In Est Suspendisse Bibendum.
-                    </h2>
-                    <p class="text-sm text-gray-600 mb-2">
-                        Cras semper, massa vel aliquam luctus, eros odio tempor turpis, ac placerat metus tortor eget magna.
-                    </p>
-                    <p class="text-sm text-gray-600 mb-4">
-                        Donec mattis posuere pharetra. Donec vestibulum ornare velit ut sollicitudin ut sollicitudin.
-                    </p>
-
-                    <div class="mb-2 font-bold text-pink-700">Topic</div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700">
-                    <div>✔ Color</div>
-                    <div>✔ Allignment</div>
-                    <div>✔ Graphic Design</div>
-                    <div>✔ Typography</div>
-                    <div>✔ Development</div>
-                    <div>✔ Web Design</div>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
+            {% endif %}
         </div>
     </section>
     <!-- Popular Events -->
@@ -117,133 +103,49 @@
         <h1 class="text-center text-4xl font-bold leading-tight">POPULAR EVENT</h1>
         <div class="catetory_btn mt-3">
             <ul class="flex gap-5 justify-center flex-wrap">
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">HOME</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">ABOUT</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">EVENTS</a></li>
+                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">ALL</a></li>
+                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">APP</a></li>
+                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">DJANGO</a></li>
                 <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">Web developments</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">PAGES</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">PAGES</a></li>
+                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">COMPETETIVE PROGRAMMING</a></li>
+                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">UI/UX</a></li>
             </ul>
         </div>
         <!-- all Events Cards -->
-        <div class="catetory_wise_events mt-8 grid justify-center md:grid-cols-2 lg:grid-cols-4 gap-5 ">
+        <div class="catetory_wise_events mt-8 grid justify-center md:grid-cols-2 lg:grid-cols-3 gap-5 ">
             <!-- card 1 -->
-            <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <div class="card_header relative">
-                    <img src="{% static 'images/ev-md1.png' %}" alt="" class="w-full h-56 object-cover" />
-                    <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
-                    500 Seat
-                    </span>
-                </div>
-                <!-- Card Body -->
-                <div class="card_body p-5 space-y-3 ">
-                    <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <div class="flex items-center gap-1">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>January 21, 2025</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <i class="fa-solid fa-location-pin"></i>
-                        <span>Broadw, New York</span>
-                    </div>
-                    </div>
-                    <h2 class="text-lg font-semibold text-gray-800 leading-snug"> Media Companies Need To Better One Then Educate Advertisers.</h2>
-                </div>
-
-                <!-- Footer -->
-                <div class="card_footer px-5 py-3 flex items-center justify-between border-t border-gray-100">
-                    <a href="#" class="text-rose-600 font-semibold hover:underline">Book Now</a>
-                    <button class="text-gray-500 hover:text-rose-600 text-xl"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <!-- card 2 -->
-            <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <div class="card_header relative">
-                    <img src="{% static 'images/ev-md1.png' %}" alt="" class="w-full h-56 object-cover" />
-                    <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
-                    500 Seat
-                    </span>
-                </div>
-                <!-- Card Body -->
-                <div class="card_body p-5 space-y-3 ">
-                    <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <div class="flex items-center gap-1">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>January 21, 2025</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <i class="fa-solid fa-location-pin"></i>
-                        <span>Broadw, New York</span>
-                    </div>
-                    </div>
-                    <h2 class="text-lg font-semibold text-gray-800 leading-snug"> Media Companies Need To Better One Then Educate Advertisers.</h2>
-                </div>
-
-                <!-- Footer -->
-                <div class="card_footer px-5 py-3 flex items-center justify-between border-t border-gray-100">
-                    <a href="#" class="text-rose-600 font-semibold hover:underline">Book Now</a>
-                    <button class="text-gray-500 hover:text-rose-600 text-xl"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-
-            <!-- card 3 -->
-            <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <div class="card_header relative">
-                    <img src="{% static 'images/ev-md1.png' %}" alt="" class="w-full h-56 object-cover" />
-                    <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
-                    500 Seat
-                    </span>
-                </div>
-                <!-- Card Body -->
-                <div class="card_body p-5 space-y-3 ">
-                    <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <div class="flex items-center gap-1">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>January 21, 2025</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <i class="fa-solid fa-location-pin"></i>
-                        <span>Broadw, New York</span>
-                    </div>
-                    </div>
-                    <h2 class="text-lg font-semibold text-gray-800 leading-snug"> Media Companies Need To Better One Then Educate Advertisers.</h2>
-                </div>
-
-                <!-- Footer -->
-                <div class="card_footer px-5 py-3 flex items-center justify-between border-t border-gray-100">
-                    <a href="#" class="text-rose-600 font-semibold hover:underline">Book Now</a>
-                    <button class="text-gray-500 hover:text-rose-600 text-xl"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <!-- card 4 -->
-            <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <div class="card_header relative">
-                    <img src="{% static 'images/ev-md1.png' %}" alt="" class="w-full h-56 object-cover" />
-                    <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
-                    500 Seat
-                    </span>
-                </div>
-                <!-- Card Body -->
-                <div class="card_body p-5 space-y-3 ">
-                    <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <div class="flex items-center gap-1">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>January 21, 2025</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <i class="fa-solid fa-location-pin"></i>
-                        <span>Broadw, New York</span>
-                    </div>
-                    </div>
-                    <h2 class="text-lg font-semibold text-gray-800 leading-snug"> Media Companies Need To Better One Then Educate Advertisers.</h2>
-                </div>
-
-                <!-- Footer -->
-                <div class="card_footer px-5 py-3 flex items-center justify-between border-t border-gray-100">
-                    <a href="#" class="text-rose-600 font-semibold hover:underline">Book Now</a>
-                    <button class="text-gray-500 hover:text-rose-600 text-xl"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
+             {% if events %}
+             {% for event  in events %}
+             <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                 <div class="card_header relative">
+                     <img src="{% static 'images/ev-md1.png' %}" alt="" class="w-full h-56 object-cover" />
+                     <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
+                     500 Seat
+                     </span>
+                 </div>
+                 <!-- Card Body -->
+                 <div class="card_body p-5 space-y-3 ">
+                     <div class="flex items-center justify-between text-gray-500 text-sm">
+                     <div class="flex items-center gap-1">
+                         <i class="fa-regular fa-calendar-days"></i>
+                         <span>{{event.date}}</span>
+                     </div>
+                     <div class="flex items-center gap-1">
+                         <i class="fa-solid fa-location-pin"></i>
+                         <span>{{event.location}}</span>
+                     </div>
+                     </div>
+                     <h2 class="text-lg font-semibold text-gray-800 leading-snug"> {{event.name}}</h2>
+                 </div>
+ 
+                 <!-- Footer -->
+                 <div class="card_footer px-5 py-3 flex items-center justify-between border-t border-gray-100">
+                     <a href="#" class="text-rose-600 font-semibold hover:underline">Book Now</a>
+                     <button class="text-gray-500 hover:text-rose-600 text-xl"><i class="fa-solid fa-share-nodes"></i></button>
+                 </div>
+             </div>
+             {% endfor %}
+             {% endif %}
         </div>
     </section>
 </main>
