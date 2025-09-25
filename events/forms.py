@@ -1,7 +1,7 @@
 from django import forms
 from datetime import datetime
 # import model:
-from events.models import Event , Category , Participant
+from events.models import Event , Category 
 
 class StyledFormMixin:
     input_classes = (
@@ -110,11 +110,3 @@ class MakeCategoryFrom(StyledFormMixin,forms.ModelForm):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
         
-class RegisterParticipantFrom(StyledFormMixin,forms.ModelForm):
-    class Meta:
-        model = Participant
-        fields = "__all__"
-
-    def __init__(self, *arg, **kwarg):
-        super().__init__(*arg, **kwarg)
-        self.apply_styled_widgets()

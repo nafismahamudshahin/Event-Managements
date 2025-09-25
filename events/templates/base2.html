@@ -12,7 +12,7 @@
 <body class="bg-black">
 <header>
     <nav class="py-2">
-        <div class="container m-auto flex justify-between items-center">
+        <div class="max-w-7xl m-auto flex justify-between items-center">
             <div class="left_nav text-white">
                 <h1 class="text-3xl">Organizer Dashboard</h1>
                 <p class="text-sm text-gray-400">Monitor your events and Track participant engagement</p>
@@ -27,13 +27,8 @@
                 <a href="{% url 'category' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
                     <span >Category</span>
                 </a>
-                <a href="{% url 'create-category' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
-                    <i class="fa-solid fa-plus"></i>
-                    <span >Create Category</span>
-                </a>
-                <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
-                    <i class="fa-solid fa-plus"></i>
-                    <span >Create Event</span>
+                <a href="{% url 'participant' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
+                    <span >Participants</span>
                 </a>
             </div>
         </div>

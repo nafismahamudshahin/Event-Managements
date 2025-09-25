@@ -3,14 +3,14 @@
 {% block content2 %}
 <main>
     <section>
-        <div class="hero_section container mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div class="hero_section max-w-7xl mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <!-- Total Participants -->
         <div class="card flex-col rounded-lg p-5 shadow-lg  bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
             <div class="flex justify-between">
                 <h3 class="mb-5 text-sm font-medium">Total Participants</h3>
                 <i class="fa-solid fa-users text-2xl"></i>
             </div>
-            <b class="text-2xl">1247</b>
+            <b class="text-2xl">{{total_participants}}</b>
             <small class="block my-2 text-gray-400">Across all events</small>
             <small class="block text-gray-400"><span class="text-green-500">+233</span> from last month</small>
         </div>
@@ -54,14 +54,18 @@
     </section>
     <!-- show all Events -->
     <section class="">
-        <div class="container m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
+        <div class="max-w-7xl m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
             <div class="flex justify-between items-center text-white">
                 <div class="font-semibold flex items-center gap-2">
                     <i class="fa-regular fa-calendar"></i>
                     <strong>{{event_name}}</strong>
                 </div>
-                <div>
+                <div class="flex gap-2">
                     <a href="{% url 'dashboard'%}?type=todayevents"  class="bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">Show Today's Events</a>
+                    <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">
+                        <i class="fa-solid fa-plus"></i>
+                        <span >Create Event</span>
+                    </a>
                 </div>
             </div>
             <!-- Events -->
@@ -91,8 +95,7 @@
                             </div>
 
                             <div class="flex items-center gap-4 text-white">
-                                <span class="">{{event.category.name }}</span>
-                                <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
+                                <span class="bg-rose-500 rounded-lg px-3">{{event.category.name }}</span>
                                 <a class="ice_btn">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>

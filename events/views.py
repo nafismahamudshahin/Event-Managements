@@ -3,10 +3,11 @@ from django.db.models import Q , Count
 from django.contrib import messages
 from django.utils import timezone 
 # import Register form from from.py:
-from events.forms import CreateEventFrom , MakeCategoryFrom , RegisterParticipantFrom
+from events.forms import CreateEventFrom , MakeCategoryFrom 
+from events.models import Participant
 
 # import Model:
-from events.models import Event , Participant ,Category
+from events.models import Event ,Category
 # Create your views here.
 def register_event(request):
     if request.method == "POST":
@@ -29,18 +30,6 @@ def register_category(request):
         return redirect('dashboard')
     else:
         form = MakeCategoryFrom()
-    return render(request,'form.html',{'form':form})
-
-# Register Participant:
-def register_participant(request):
-    if request.method == "POST":
-        form = RegisterParticipantFrom(request.POST)
-        if form.is_valid():
-            form.save()
-        messages.success(request,"Participant Register Successfully")
-        return redirect('create-participint')
-    else:
-        form = RegisterParticipantFrom()
     return render(request,'form.html',{'form':form})
 
 # This dashboard Render for Admin:
@@ -68,6 +57,7 @@ def admin_dashboard(request):
         "events":events.order_by('date','time'),
         'count':counts_events,
         'event_name': event_name,
+        "total_participants": Participant.objects.all().count()
     }
     return render(request,'dashboard.html',context)
 
@@ -78,7 +68,6 @@ def category_management(request):
         "categprys": all_categorys,
     }
     return render(request,"category.html",context)
-
 
 
 # Edit Event information:
@@ -114,6 +103,7 @@ def delete_category(request,id):
     category = Category.objects.get(id=id)
     category.delete()
     return redirect("category")
+
 
 def test(request):
     return render(request,'dashboard.html')
