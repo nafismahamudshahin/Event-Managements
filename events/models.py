@@ -10,18 +10,17 @@ class Category(models.Model):
 class Event(models.Model):
     name = models.CharField()
     description = models.TextField()
-    # img = models.ImageField(upload_to='images/', blank=True, null=True)
     date = models.DateField()
     time = models.TimeField()
     location = models.CharField()
-    category = models.ForeignKey(Category,on_delete=models.CASCADE,default=1)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,default=1 ,related_name="category")
     def __str__(self):
         return self.name
 
 class Participant(models.Model):
     name = models.CharField()
     email = models.EmailField()
-    event = models.ManyToManyField(Event)
+    event = models.ManyToManyField(Event,related_name="participant")
     def __str__(self):
         return self.name
 

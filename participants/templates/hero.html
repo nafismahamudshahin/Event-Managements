@@ -1,0 +1,40 @@
+
+{% load static %}
+<!-- Hero Section -->
+<div class="">
+    <div class=" max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center px-4 py-12 gap-10 ">
+        <!-- Left -->
+        <div class="flex-1 space-y-6">
+        <div class="flex items-center gap-2">
+            <i class="fa-regular fa-calendar-days"></i>
+            <h3 class="text-rose-500 font-semibold">{{time}}</h3>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight"> EVENTS, MEETUPS & <span class="text-rose-500">CONFERENCES</span></h1>
+    
+        <div class="flex gap-3 text-gray-700 font-medium">
+            <div class="flex items-center gap-2">
+            <i class="fa-solid fa-chart-diagram"></i>
+                <span>500 Seat sap</span>
+            </div>
+            <div class="flex items-center gap-2">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>10 Speaker</span>
+            </div>
+            <div class="flex items-center gap-2">
+            <i class="fa-solid fa-location-pin"></i>
+            <span>1356 Broadway, New York</span>
+            </div>
+        </div>
+    
+        <div class="flex gap-4 flex-wrap">
+            <a class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition" href="#">BOOK NOW</a>
+            <a class="px-6 py-3 bg-white rounded-lg font-semibold text-rose-500 border-2 border-rose-500 hover:bg-rose-500 hover:text-white transition" href="#">VIEW DETAILS</a>
+        </div>
+        </div>
+    
+        <!-- Right -->
+        <div class="flex-1">
+        <img class="w-full max-w-lg mx-auto" src="{% static 'images/hero-figure1.png' %} "alt=""/>
+        </div>
+    </div>
+</div>

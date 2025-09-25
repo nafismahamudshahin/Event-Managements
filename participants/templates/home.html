@@ -11,10 +11,54 @@
             <button class="px-10 py-3 bg-rose-600 text-white rounded-full font-semibold hover:bg-rose-700 transition"> Search Now </button>
         </form>
     </section>
+    {% comment %} show search results {% endcomment %}
+    {% if search_results %}
+    <section class="mt-5 max-w-7xl mx-auto flex-col space-y-4">
+        <h3 class="title text-2xl font-semibold text-rose-500">Search results for {{query}}</h3>
+        {% for event in search_results %}
+        <div class="flex items-center justify-between p-4 shadow-xl  rounded-lg  bg-pink-300 hover:bg-gradient-to-r hover:from-pink-300 hover:to-rose-300">
+            <div class="flex items-center">
+                <div class="flex flex-col">
+                <h3 class="font-semibold text-lg text-gray-800">{{ event.name }}</h3>
+                <div class="flex flex-wrap items-center gap-4 text-sm mt-1">
+                    <div class="flex gap-2 items-center">
+                        <i class="fa-regular fa-clock text-rose-500"></i>
+                        <span>{{ event.time }}</span>
+                        <span>{{ event.date }}</span>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <i class="fa-solid fa-location-dot text-rose-500"></i>
+                        <span>{{ event.location }}</span>
+                    </div>
+
+                    <!-- Participants -->
+                    <div class="flex gap-2 items-center">
+                        <i class="fa-solid fa-people-group text-rose-500"></i>
+                        <span>150 participants</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">BOOK NOW</a>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
     <!-- Filter Events: -->
      {% if filter_events %}
      <section class="mt-5 max-w-7xl mx-auto flex-col space-y-4">
-        <h1 class="text-2xl font-semibold">Search Results:</h1>
+        <h3 class="title text-center text-3xl font-semibold text-rose-500">Schedule</h3>
+        <h1 class="text-center text-4xl font-bold leading-tight">EVENT SCHEDULE</h1>
+        <div class="text-center">
+            <span class="text-4xl text-rose-500">{{start_time}}</span>
+            <span class="text-4xl text-rose-500"> - </span>
+            <span class="text-4xl text-rose-500">{{end_time}}</span>
+        </div>
         {% for event in filter_events %}
         <div class="flex items-center justify-between p-4 shadow-xl  rounded-lg  bg-pink-300 hover:bg-gradient-to-r hover:from-pink-300 hover:to-rose-300">
         <div class="flex items-center">
@@ -22,19 +66,19 @@
             <h3 class="font-semibold text-lg text-gray-800">{{ event.name }}</h3>
             <div class="flex flex-wrap items-center gap-4 text-sm mt-1">
                 <div class="flex gap-2 items-center">
-                <i class="fa-regular fa-clock text-rose-500"></i>
-                <span>{{ event.time }}</span>
-                <span>{{ event.date }}</span>
+                    <i class="fa-regular fa-clock text-rose-500"></i>
+                    <span>{{ event.time }}</span>
+                    <span>{{ event.date }}</span>
                 </div>
                 <div class="flex gap-2 items-center">
-                <i class="fa-solid fa-location-dot text-rose-500"></i>
-                <span>{{ event.location }}</span>
+                    <i class="fa-solid fa-location-dot text-rose-500"></i>
+                    <span>{{ event.location }}</span>
                 </div>
 
                 <!-- Participants -->
                 <div class="flex gap-2 items-center">
-                <i class="fa-solid fa-people-group text-rose-500"></i>
-                <span>150 participants</span>
+                    <i class="fa-solid fa-people-group text-rose-500"></i>
+                    <span>150 participants</span>
                 </div>
             </div>
             </div>
@@ -49,9 +93,9 @@
      </section>
      {% endif %}
     <!-- Today Events Schedule -->
-    <section class="mt-5 max-w-7xl mx-auto">
+    {% comment %} <section class="mt-5 max-w-7xl mx-auto">
         <h3 class="title text-center text-3xl font-semibold text-rose-500">Schedule</h3>
-        <h1 class="text-center text-4xl font-bold leading-tight">TODAY EVENT SCHEDULE</h1>
+        <h1 class="text-center text-4xl font-bold leading-tight">EVENT SCHEDULE</h1>
         <div class="text-center">
             <span class="text-4xl text-rose-500">{{time}}</span>
         </div>
@@ -96,19 +140,18 @@
             {% endfor %}
             {% endif %}
         </div>
-    </section>
+    </section> {% endcomment %}
     <!-- Popular Events -->
     <section class="mt-5  max-w-7xl mx-auto">
         <h3 class="title text-center text-3xl font-semibold text-rose-500">Event</h3>
         <h1 class="text-center text-4xl font-bold leading-tight">POPULAR EVENT</h1>
         <div class="catetory_btn mt-3">
             <ul class="flex gap-5 justify-center flex-wrap">
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">ALL</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">APP</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">DJANGO</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">Web developments</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">COMPETETIVE PROGRAMMING</a></li>
-                <li><a class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 " href="#">UI/UX</a></li>
+                {% if catetorys %}
+                    {% for category in catetorys %}
+                    <li><a href="{% url 'home' %}?type={{category.name}}" class="hover:text-rose-500 font-semibold rounded-lg px-5 py-2 border-2 border-transparent hover:border-2 hover:border-rose-500 ">{{category.name}}</a></li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
         <!-- all Events Cards -->

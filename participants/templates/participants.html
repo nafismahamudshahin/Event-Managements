@@ -34,7 +34,7 @@
                         </div>
                         <div class="flex items-center gap-4 text-white">
                             {% comment %} {% url 'edit-categprys' categprys.id %} {% endcomment %}
-                            <a href="" class="edit_btn">
+                            <a href="{% url 'edit-participant' participant.id %}" class="edit_btn">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </a>
                             {% comment %} {% url 'delete-categprys' categprys.id %} {% endcomment %}
