@@ -99,7 +99,16 @@ def deleteEvent(request,id):
     event.delete()
     return redirect('dashboard')
 
-
+#Edit Category:
+def edit_category(request,id):
+    category = Category.objects.get(id=id)
+    populate_form = MakeCategoryFrom(instance = category)
+    if request == "POST":
+        populate_form = MakeCategoryFrom(request.POST,instance = category)
+        if populate_form.is_valid():
+            populate_form.save()
+            redirect('category')
+    return render(request,"form.html",{'form':populate_form})
 
 def test(request):
     return render(request,'dashboard.html')

@@ -1,7 +1,7 @@
 from django.urls import path
 
 # import views for render the link:
-from events.views import test, register_event,register_participant,register_category ,admin_dashboard ,editEventInfo ,deleteEvent ,category_management
+from events.views import test, register_event,register_participant,register_category ,admin_dashboard ,editEventInfo ,deleteEvent ,category_management ,edit_category
 
 urlpatterns = [
     path('test/',test),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('create-category/',register_category,name="create-category"),
     path('edit-event/<int:id>/', editEventInfo , name="edit-event"),
     path('delete-event/<int:id>/',deleteEvent ,name="delete-event"),
+    path('edit-category/<int:id>/',edit_category,name="edit-category")
 ]
