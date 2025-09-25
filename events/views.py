@@ -71,6 +71,16 @@ def admin_dashboard(request):
     }
     return render(request,'dashboard.html',context)
 
+# Category:
+def category_management(request):
+    all_categorys = Category.objects.all()
+    context={
+        "categprys": all_categorys,
+    }
+    return render(request,"category.html",context)
+
+
+
 # Edit Event information:
 def editEventInfo(request,id):
     event = Event.objects.get(id=id)
@@ -88,6 +98,8 @@ def deleteEvent(request,id):
     event = Event.objects.get(id=id)
     event.delete()
     return redirect('dashboard')
+
+
 
 def test(request):
     return render(request,'dashboard.html')

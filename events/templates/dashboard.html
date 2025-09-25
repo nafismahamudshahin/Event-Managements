@@ -1,145 +1,114 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
-<body class="bg-black">
-    <header>
-        <nav class="py-2">
-            <div class="container m-auto flex justify-between items-center">
-                <div class="left_nav text-white">
-                    <h1 class="text-3xl">Organizer Dashboard</h1>
-                    <p class="text-sm text-gray-400">Monitor your events and Track participant engagement</p>
-                </div>
-                <div class="right_nav flex gap-5">
-                    <a href="{% url 'home' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
-                        <span >Home</span>
-                    </a>
-                    <a href="{% url 'create-category' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
-                        <i class="fa-solid fa-plus"></i>
-                        <span >Create Category</span>
-                    </a>
-                    <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-blue-500 py-2 px-3 rounded-lg text-white font-bold cursor-pointer">
-                        <i class="fa-solid fa-plus"></i>
-                        <span >Create Event</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
+{% extends "base2.html" %}
+
+{% block content2 %}
+<main>
+    <section>
         <div class="hero_section container mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-            <!-- Total Participants -->
-            <div class="card flex-col rounded-lg p-5 shadow-lg  bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
-                <div class="flex justify-between">
-                    <h3 class="mb-5 text-sm font-medium">Total Participants</h3>
-                    <i class="fa-solid fa-users text-2xl"></i>
-                </div>
-                <b class="text-2xl">1247</b>
-                <small class="block my-2 text-gray-400">Across all events</small>
-                <small class="block text-gray-400"><span class="text-green-500">+233</span> from last month</small>
+        <!-- Total Participants -->
+        <div class="card flex-col rounded-lg p-5 shadow-lg  bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+            <div class="flex justify-between">
+                <h3 class="mb-5 text-sm font-medium">Total Participants</h3>
+                <i class="fa-solid fa-users text-2xl"></i>
             </div>
-            <!-- Total Events -->
-            <a href="{% url 'dashboard' %}?type=all">
-            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
-                <div class="flex justify-between">
-                    <h3 class="mb-5 text-sm font-medium">Total Events</h3>
-                    <i class="fa-regular fa-calendar text-2xl"></i>
-                </div>
-                <b class="text-2xl">{{count.total}}</b>
-                <small class="block my-2 text-gray-400">Across time events</small>
-                <small class="block text-gray-400">+6%</span> from last month</small>
-            </div>
-            </a>
-            <!-- upcoming events -->
-            <a href="{% url 'dashboard' %}?type=upcoming">
-            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
-                <div class="flex justify-between">
-                    <h3 class="mb-5 text-sm font-medium">Upcoming Events</h3>
-                    <i class="fa-regular fa-calendar-days text-2xl"></i>
-                </div>
-                <b class="text-2xl">{{count.upcoming}}</b>
-                <small class="block my-2 text-gray-400">Next 30 days</small>
-                <small class="block text-gray-400">+16%</span> from last month</small>
-            </div>
-            </a>
-            <!-- Past Events -->
-            <a href="{% url 'dashboard' %}?type=past">
-            <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
-                <div class="flex justify-between">
-                    <h3 class="mb-5 text-sm font-medium">Past Events</h3>
-                    <i class="fa-regular fa-clock text-2xl"></i>
-                </div>
-                <b class="text-2xl">{{count.past}}</b>
-                <small class="block my-2 text-gray-400">Completed events</small>
-                <small class="block text-gray-400">+16%</span> from last month</small>
-            </div>
-            </a>
+            <b class="text-2xl">1247</b>
+            <small class="block my-2 text-gray-400">Across all events</small>
+            <small class="block text-gray-400"><span class="text-green-500">+233</span> from last month</small>
         </div>
-    </header>
-    <main>
-        <!-- show all Events -->
-        <section class="">
-            <div class="container m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
-                <div class="flex justify-between items-center text-white">
-                    <div class="font-semibold flex items-center gap-2">
-                        <i class="fa-regular fa-calendar"></i>
-                        <strong>{{event_name}}</strong>
-                    </div>
-                    <div>
-                        <a href="{% url 'dashboard'%}?type=todayevents"  class="bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">Show Today's Events</a>
-                    </div>
+        <!-- Total Events -->
+        <a href="{% url 'dashboard' %}?type=all">
+        <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+            <div class="flex justify-between">
+                <h3 class="mb-5 text-sm font-medium">Total Events</h3>
+                <i class="fa-regular fa-calendar text-2xl"></i>
+            </div>
+            <b class="text-2xl">{{count.total}}</b>
+            <small class="block my-2 text-gray-400">Across time events</small>
+            <small class="block text-gray-400">+6%</span> from last month</small>
+        </div>
+        </a>
+        <!-- upcoming events -->
+        <a href="{% url 'dashboard' %}?type=upcoming">
+        <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+            <div class="flex justify-between">
+                <h3 class="mb-5 text-sm font-medium">Upcoming Events</h3>
+                <i class="fa-regular fa-calendar-days text-2xl"></i>
+            </div>
+            <b class="text-2xl">{{count.upcoming}}</b>
+            <small class="block my-2 text-gray-400">Next 30 days</small>
+            <small class="block text-gray-400">+16%</span> from last month</small>
+        </div>
+        </a>
+        <!-- Past Events -->
+        <a href="{% url 'dashboard' %}?type=past">
+        <div class="card flex-col rounded-lg p-5 shadow-lg bg-transparent border border-neutral-900 hover:bg-stone-950 text-white">
+            <div class="flex justify-between">
+                <h3 class="mb-5 text-sm font-medium">Past Events</h3>
+                <i class="fa-regular fa-clock text-2xl"></i>
+            </div>
+            <b class="text-2xl">{{count.past}}</b>
+            <small class="block my-2 text-gray-400">Completed events</small>
+            <small class="block text-gray-400">+16%</span> from last month</small>
+        </div>
+        </a>
+    </div>
+    </section>
+    <!-- show all Events -->
+    <section class="">
+        <div class="container m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
+            <div class="flex justify-between items-center text-white">
+                <div class="font-semibold flex items-center gap-2">
+                    <i class="fa-regular fa-calendar"></i>
+                    <strong>{{event_name}}</strong>
                 </div>
-                <!-- Events -->
-                <div class="events_show_cards mt-5 mb-3 grid gap-4">
-                    {% if events %}
-                        {% for event in events %}
-                            <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
-                                <div class="flex items-center">
-                                    <div class="flex flex-col">
-                                        <h3 class="font-semibold text-white">{{event.name}}</h3>
-                                        <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
-                                            <div class="flex gap-2 items-center ">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span>{{event.time}}</span>
-                                                 <span>{{event.date}}</span>
-                                            </div>
-                                            <div class="flex gap-2 items-center">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span>{{event.location}}</span>
-                                            </div>
-                                            <div class="flex gap-2 items-center ">
-                                                <i class="fa-solid fa-people-group"></i>
-                                                <span>150 participants</span>
-                                            </div>
+                <div>
+                    <a href="{% url 'dashboard'%}?type=todayevents"  class="bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">Show Today's Events</a>
+                </div>
+            </div>
+            <!-- Events -->
+            <div class="events_show_cards mt-5 mb-3 grid gap-4">
+                {% if events %}
+                    {% for event in events %}
+                        <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
+                            <div class="flex items-center">
+                                <div class="flex flex-col">
+                                    <h3 class="font-semibold text-white">{{event.name}}</h3>
+                                    <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
+                                        <div class="flex gap-2 items-center ">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span>{{event.time}}</span>
+                                                <span>{{event.date}}</span>
+                                        </div>
+                                        <div class="flex gap-2 items-center">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <span>{{event.location}}</span>
+                                        </div>
+                                        <div class="flex gap-2 items-center ">
+                                            <i class="fa-solid fa-people-group"></i>
+                                            <span>150 participants</span>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="flex items-center gap-4 text-white">
-                                    <span class="">{{event.category.name }}</span>
-                                    <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
-                                    <a class="ice_btn">
-                                        <i class="fa-regular fa-eye"></i>
-                                    </a>
-                                    <a href="{% url 'edit-event' event.id %}" class="edit_btn">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <a href="{% url 'delete-event' event.id %}" class="delete_btn">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </a>
-                                </div>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                </div>
+
+                            <div class="flex items-center gap-4 text-white">
+                                <span class="">{{event.category.name }}</span>
+                                <span class="bg-blue-500 rounded-lg px-3">Upcoming</span>
+                                <a class="ice_btn">
+                                    <i class="fa-regular fa-eye"></i>
+                                </a>
+                                <a href="{% url 'edit-event' event.id %}" class="edit_btn">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a href="{% url 'delete-event' event.id %}" class="delete_btn">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-        </section>
-    </main>
-</body>
-</html>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content2 %}

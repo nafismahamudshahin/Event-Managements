@@ -1,11 +1,12 @@
 from django.urls import path
 
 # import views for render the link:
-from events.views import test, register_event,register_participant,register_category ,admin_dashboard ,editEventInfo ,deleteEvent
+from events.views import test, register_event,register_participant,register_category ,admin_dashboard ,editEventInfo ,deleteEvent ,category_management
 
 urlpatterns = [
     path('test/',test),
     path('dashboard/',admin_dashboard,name="dashboard"),
+    path('category/',category_management,name="category"),
     path('create-participint/',register_participant , name="create-participint"),
     path('create-event/',register_event , name="create-event"),
     path('create-category/',register_category,name="create-category"),

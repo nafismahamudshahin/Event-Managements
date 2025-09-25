@@ -9,7 +9,7 @@ def home(request):
     events = Event.objects.all()
     filter_events = None
     if request.method == "POST":
-
+        
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
 
