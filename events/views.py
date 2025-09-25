@@ -107,8 +107,13 @@ def edit_category(request,id):
         populate_form = MakeCategoryFrom(request.POST,instance = category)
         if populate_form.is_valid():
             populate_form.save()
-            redirect('category')
+            return redirect('category')
     return render(request,"form.html",{'form':populate_form})
+# delete category:
+def delete_category(request,id):
+    category = Category.objects.get(id=id)
+    category.delete()
+    return redirect("category")
 
 def test(request):
     return render(request,'dashboard.html')

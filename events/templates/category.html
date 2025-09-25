@@ -27,7 +27,7 @@
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </a>
                             {% comment %} {% url 'delete-categprys' categprys.id %} {% endcomment %}
-                            <a href="" class="delete_btn">
+                            <a href="{% url 'delete-category' category.id %}" class="delete_btn">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
                         </div>
