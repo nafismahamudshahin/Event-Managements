@@ -74,8 +74,10 @@ def home(request):
     }
     return render(request,'home.html',context)
 
-
-
+# show event details:
+def event_details(request,id):
+    print(id)
+    return render(request,"details.html")
 # edit:
 
 def edit_participant(request,id):
@@ -93,3 +95,4 @@ def delete_participant(request,id):
     participant = Participant.objects.get(id=id)
     participant.delete()
     return redirect("participant")
+
