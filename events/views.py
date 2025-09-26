@@ -57,7 +57,7 @@ def admin_dashboard(request):
         "events":events.order_by('date','time'),
         'count':counts_events,
         'event_name': event_name,
-        "total_participants": Participant.objects.all().count()
+        "total_participants": Participant.objects.aggregate(total_count = Count('id'))
     }
     return render(request,'dashboard.html',context)
 
