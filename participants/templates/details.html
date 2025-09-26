@@ -1,11 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Details</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main class="bg-gray-50 py-10">
+  <section class="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8 grid grid-cols-1 lg:grid-cols-3 gap-10">
+    
+    {% comment %} Left  {% endcomment %}
+    <div class="lg:col-span-2 space-y-6">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800">{{event.name}}</h1>
+      
+      <div class="flex flex-wrap gap-4 text-gray-600 text-sm">
+        <div class="flex items-center gap-2">
+          <i class="fa-regular fa-calendar-days text-rose-500"></i>
+          <span>{{event.date}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-clock text-rose-500"></i>
+          <span>{{event.time}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-rose-500"></i>
+          <span>{{event.location}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-users text-rose-500"></i>
+          <span>{{event.participant.count}} Participants</span>
+        </div>
+      </div>
+
+      <div class="w-full">
+        <img src="{% static 'images/ev-md1.png' %}" alt="Event Image" class="w-full h-96 object-cover rounded-lg">
+      </div>
+
+      {% comment %} Description  {% endcomment %}
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-3">Description</h2>
+        <p class="text-gray-600 leading-relaxed">
+          {{event.description|linebreaks}}
+        </p>
+      </div>
+    </div>
+
+    {% comment %} Right {% endcomment %}
+    <div class="space-y-6 border-t lg:border-t-0 lg:border-l pt-6 lg:pt-0 lg:pl-6 border-gray-100">
+      <div>
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Event Info</h3>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><strong>Category:</strong> {{ event.category.name }}</li>
+          <li><strong>Date:</strong> {{ event.date }}</li>
+          <li><strong>Time:</strong> {{ event.time }}</li>
+          <li><strong>Location:</strong> {{ event.location }}</li>
+        </ul>
+      </div>
+
+      {% comment %}  Book Now Button {% endcomment %}
+      <a href="{% url 'create-participint' %}" class="block text-center bg-rose-600 text-white font-semibold py-3 rounded-md hover:bg-rose-700 transition">
+        Book Now
+      </a>
+
+      {% comment %} Share Buttons {% endcomment %}
+      <div>
+        <h3 class="text-lg font-medium text-gray-800 mb-2">Share</h3>
+        <div class="flex gap-4 text-xl text-gray-500">
+          <a href="#"><i class="fa-brands fa-facebook hover:text-blue-600"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter hover:text-blue-400"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin hover:text-blue-700"></i></a>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+</main>
+{% endblock content %}

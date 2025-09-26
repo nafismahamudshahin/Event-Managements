@@ -10,24 +10,22 @@
     {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
 </head>
 <body>
-<header class="bg-white shadow bg-gradient-to-r from-pink-100 via-pink-200 to-pink-200 min-h-screen">
+<header class="bg-gray-500 shadow ">
   <!-- Navbar -->
-<nav class="py-5">
+<nav class="py-5 bg-white">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
     <!-- Logo -->
     <div class="logo">
       <h1 class="text-3xl font-bold">
         <span class="text-rose-500">E</span>vent
-        <span class="text-rose-500">L</span>ab
+        <span class="text-rose-500">M</span>aster
       </h1>
     </div>
 
     <!-- Desktop Menu -->
     <div class="hidden md:flex gap-8 items-center font-medium">
       <ul class="flex gap-8 items-center">
-        <li><a class="hover:text-rose-500 transition" href="#">HOME</a></li>
-        <li><a class="hover:text-rose-500 transition" href="#">ABOUT</a></li>
-        <li><a class="hover:text-rose-500 transition" href="#">EVENTS</a></li>
+        <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition" href="#">HOME</a></li>
         <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li>
       </ul>
 
@@ -68,7 +66,6 @@
     </ul>
   </div>
 </nav>
-{% include "hero.html" %}
 </header>
 {% block content %}
 

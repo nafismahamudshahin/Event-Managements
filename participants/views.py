@@ -15,6 +15,17 @@ def register_participant(request):
         if form.is_valid():
             form.save()
         messages.success(request,"Participant Register Successfully")
+        return redirect('home')
+    else:
+        form = RegisterParticipantFrom()
+    return render(request,'form.html',{'form':form})
+
+def register_participant_for_admin(request):
+    if request.method == "POST":
+        form = RegisterParticipantFrom(request.POST)
+        if form.is_valid():
+            form.save()
+        messages.success(request,"Participant Register Successfully")
         return redirect('participant')
     else:
         form = RegisterParticipantFrom()
@@ -33,6 +44,7 @@ def home(request):
     type = request.GET.get('type',"all")
     query = request.GET.get("search_query")
     todaytime = timezone.localdate(timezone.now())
+
     events = Event.objects.select_related('category').prefetch_related('participant').all()
     filter_events = None
     start = None
@@ -58,9 +70,7 @@ def home(request):
             Q(location__icontains=query) |
             Q(cat_lower__contains=query)
         )
-    print(query, search_results)
-    for s in search_results:
-        print(s)
+
     context = {
         "events": events ,
         'today_events': events.filter(date = todaytime),
@@ -76,8 +86,8 @@ def home(request):
 
 # show event details:
 def event_details(request,id):
-    print(id)
-    return render(request,"details.html")
+    event = Event.objects.get(id=id)
+    return render(request,"details.html",{'event':event})
 # edit:
 
 def edit_participant(request,id):
