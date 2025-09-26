@@ -1,5 +1,5 @@
 from django import forms
-from events.forms import StyledFormMixin
+from events.styles import StyledFormMixin
 from events.models import Participant
 
 
