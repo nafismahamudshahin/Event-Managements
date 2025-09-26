@@ -50,7 +50,7 @@ def home(request):
     search_results =[]
     if query:
         query = query.lower()
-        events = events.annotate(
+        search_results = events.annotate(
             cat_lower=Lower('category__name')
         ).filter(
             Q(name__icontains=query) |
