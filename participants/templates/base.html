@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>{% block title %}{% endblock title %}</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
-    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
 <header class="bg-gray-500 shadow ">
@@ -47,9 +46,7 @@
   <!-- Mobile Menu -->
   <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
     <ul class="flex flex-col gap-4 p-6 font-medium">
-      <li><a class="hover:text-rose-500" href="#">HOME</a></li>
-      <li><a class="hover:text-rose-500" href="#">ABOUT</a></li>
-      <li><a class="hover:text-rose-500" href="#">EVENTS</a></li>
+      <li><a class="hover:text-rose-500" href="{% url 'home' %}">HOME</a></li>
       <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li>
       <li>
         <!-- Mobile Search -->

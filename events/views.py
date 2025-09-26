@@ -18,7 +18,7 @@ def register_event(request):
         return redirect('dashboard')
     else:
         form = CreateEventFrom()
-    return render(request,'form.html',{'form':form})
+    return render(request,'form.html',{'form':form,"form_title":"Event Register"})
 
 # register category:
 def register_category(request):
@@ -27,10 +27,10 @@ def register_category(request):
         if form.is_valid():
             form.save()
         messages.success(request,"Category Register Successfully")
-        return redirect('dashboard')
+        return redirect('category')
     else:
         form = MakeCategoryFrom()
-    return render(request,'form.html',{'form':form})
+    return render(request,'form.html',{'form':form,"form_title":"Catefory Register"})
 
 # This dashboard Render for Admin:
 def admin_dashboard(request):
@@ -104,6 +104,3 @@ def delete_category(request,id):
     category.delete()
     return redirect("category")
 
-
-def test(request):
-    return render(request,'dashboard.html')

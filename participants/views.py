@@ -18,7 +18,7 @@ def register_participant(request):
         return redirect('home')
     else:
         form = RegisterParticipantFrom()
-    return render(request,'form.html',{'form':form})
+    return render(request,'form.html',{'form':form,"form_title":"Participant Register"})
 
 def register_participant_for_admin(request):
     if request.method == "POST":
@@ -29,7 +29,7 @@ def register_participant_for_admin(request):
         return redirect('participant')
     else:
         form = RegisterParticipantFrom()
-    return render(request,'form.html',{'form':form})
+    return render(request,'form.html',{'form':form,"form_title":"Participant Register"})
 
 # view Participant:
 def participant(request):
@@ -86,7 +86,7 @@ def home(request):
 
 # show event details:
 def event_details(request,id):
-    event = Event.objects.get(id=id)
+    event = Event.objects.select_related('category').get(id=id)
     return render(request,"details.html",{'event':event})
 # edit:
 
