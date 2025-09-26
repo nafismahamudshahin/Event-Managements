@@ -27,8 +27,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'events',
     'participants',
-    'categories',
-    'dashboard',
 ]
 
 MIDDLEWARE = [
