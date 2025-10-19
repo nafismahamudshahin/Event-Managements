@@ -1,7 +1,46 @@
 from django import forms
 from events.styles import StyledFormMixin
 from events.models import Participant
+from django.contrib.auth.models import User
 
+
+class StyledFormMixinextra:
+    """ Mixing to apply style to form field"""
+
+    def __init__(self, *arg, **kwarg):
+        super().__init__(*arg, **kwarg)
+        self.apply_styled_widgets()
+
+    default_classes = "border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+
+    def apply_styled_widgets(self):
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.TextInput):
+                field.widget.attrs.update({
+                    'class': self.default_classes,
+                    'placeholder': f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    'class': f"{self.default_classes} resize-none",
+                    'placeholder':  f"Enter {field.label.lower()}",
+                    'rows': 5
+                })
+            elif isinstance(field.widget, forms.SelectDateWidget):
+                # print("Inside Date")
+                field.widget.attrs.update({
+                    "class": "border-2 border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+                })
+            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
+                # print("Inside checkbox")
+                field.widget.attrs.update({
+                    'class': "space-y-2"
+                })
+            else:
+                # print("Inside else")
+                field.widget.attrs.update({
+                    'class': self.default_classes
+                })
 
 class RegisterParticipantFrom(StyledFormMixin,forms.ModelForm):
     class Meta:
@@ -13,3 +52,34 @@ class RegisterParticipantFrom(StyledFormMixin,forms.ModelForm):
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
+
+class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email','password','confirm_password']
+        widgets = {
+            'password': forms.PasswordInput
+        }
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email = email).exists():
+            raise forms.ValidationError("This Email Alrady Exit.")
+        return email
+    
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        errors = []
+        if len(password)<=8:
+            errors.append("Please give me atlist eight char Password.")
+        if errors:
+            raise forms.ValidationError(errors)
+
+        return password
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if password != confirm_password:
+            raise forms.ValidationError("Password and confirm password are not same.")
+        return cleaned_data

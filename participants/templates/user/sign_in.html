@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+    {% comment %} non filed errors {% endcomment %}
+    <section class="w-1/2 mx-auto">
+        <div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p>{{error}}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                {% if messages %}
+                    {% for message in messages  %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% if form %}
+                {% for field in form %}
+                    {% comment %} filed errors {% endcomment %}
+                    <div>
+                        {% if field.errors %}
+                            {% for error in field.errors  %}
+                                <p>{{error}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <p>
+                        <label for="field_id_for_label">{{field.label}}</label>
+                        {{field}}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            <button type+"submit">SIGN IN</button>
+        </form>
+    </section>
+</body>
+</html>
