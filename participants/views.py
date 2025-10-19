@@ -7,6 +7,8 @@ from django.contrib import messages
 from events.models import Event,Participant , Category
 from participants.forms import RegisterParticipantFrom
 
+# chenged here
+
 # Create your views here.
 # Register Participant:
 def register_participant(request):
