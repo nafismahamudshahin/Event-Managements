@@ -2,13 +2,26 @@ from django.shortcuts import render ,redirect
 from django.db.models import Q , Count
 from django.contrib import messages
 from django.utils import timezone 
+from django.contrib.auth.models import Group , User
+from django.contrib.auth.decorators import login_required ,  user_passes_test
 # import Register form from from.py:
 from events.forms import CreateEventFrom , MakeCategoryFrom 
 from events.models import Participant
 
 # import Model:
 from events.models import Event ,Category
+
+def is_admin(user):
+    return user.groups.filter(name="Admin").exists()
+def is_organizer(user):
+    return user.groups.filter(name="Organizer").exists()
+def is_user(user):
+    return user.groups.filter(name="User").exists()
+
 # Create your views here.
+@login_required
+@user_passes_test(is_admin, login_url="no-access-page")
+@user_passes_test(is_organizer, login_url="no-access-page")
 def register_event(request):
     if request.method == "POST":
         form = CreateEventFrom(request.POST)
@@ -21,6 +34,9 @@ def register_event(request):
     return render(request,'form.html',{'form':form,"form_title":"Event Register"})
 
 # register category:
+@login_required
+@user_passes_test(is_admin , login_url="no-access-page")
+@user_passes_test(is_organizer, login_url="no-access-page")
 def register_category(request):
     if request.method == "POST":
         form = MakeCategoryFrom(request.POST)
@@ -33,6 +49,8 @@ def register_category(request):
     return render(request,'form.html',{'form':form,"form_title":"Catefory Register"})
 
 # This dashboard Render for Admin:
+@login_required
+@user_passes_test(is_admin , login_url="no-access-page")
 def admin_dashboard(request):
     type = request.GET.get('type',"all")
     events = Event.objects.prefetch_related('category').all()

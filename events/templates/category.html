@@ -1,49 +1,43 @@
-{% extends "base2.html" %}
-{% block content2 %}
+{% extends "main_base.html" %}
+
+{% block content %}
 <section>
-    <div class="max-w-7xl m-auto py-6 px-5 rounded-lg bg-transparent border border-neutral-900">
-        <div class="flex justify-between items-center text-white">
-            <div class="font-semibold flex items-center gap-2">
-                <strong>All Category</strong>
-            </div>
-            <div class="flex gap-2">
-                <a href="{% url 'create-category' %}" class="flex items-center gap-2 bg-stone-900 py-2 rounded-lg px-5 font-semibold cursor-pointer">
-                    <i class="fa-solid fa-plus"></i>
-                    <span >Create Category</span>
-                </a>
-            </div>
+    <div class="max-w-7xl mx-auto py-8 px-5 bg-white border border-slate-200 shadow-md rounded-xl">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-5">
+            <h2 class="text-xl font-bold text-slate-800">All Categories</h2>
+            <a href="{% url 'create-category' %}" class="flex items-center gap-2 border border-gray-200 shadow bg-indigo-600 text-black px-4 py-2 rounded-md font-medium hover:bg-indigo-500 transition">
+                <i class="fa-solid fa-plus"></i>
+                <span>Create Category</span>
+            </a>
         </div>
-        <div class="mt-5 mb-3 grid gap-4">
+
+        <!-- Category List -->
+        <div class="grid gap-4">
             {% if categprys %}
                 {% for category in categprys %}
-                    <div class="flex items-center justify-between p-4 border border-border rounded-lg bg-transparent  border-neutral-900 hover:bg-stone-950">
-                        <div class="flex items-center">
-                            <div class="flex flex-col">
-                                <h3 class="font-semibold text-white">{{category.name}}</h3>
-                                <div class="flex items-center gap-4 text-gray-400 text-sm  mt-1">
-                                    <div class="flex gap-2 items-center ">
-                                        <i class="fa-solid fa-people-group"></i>
-                                        <span>350 participants</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="flex justify-between items-center p-5 bg-slate-50 border border-slate-200 rounded-lg hover:shadow transition">
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-800">{{ category.name }}</h3>
+                            <p class="text-sm text-slate-500 mt-1 flex items-center gap-2">
+                                <i class="fa-solid fa-people-group text-rose-500"></i>
+                                350 participants
+                            </p>
                         </div>
-
-                        <div class="flex items-center gap-4 text-white">
-                            {% comment %} {% url 'edit-categprys' categprys.id %} {% endcomment %}
-                            <a href="{% url 'edit-category' category.id %}" class="edit_btn">
+                        <div class="flex gap-3 text-lg">
+                            <a href="{% url 'edit-category' category.id %}" class="text-yellow-500 hover:text-yellow-600 transition">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </a>
-                            {% comment %} {% url 'delete-categprys' categprys.id %} {% endcomment %}
-                            <a href="{% url 'delete-category' category.id %}" class="delete_btn">
+                            <a href="{% url 'delete-category' category.id %}" class="text-red-500 hover:text-red-600 transition">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
                         </div>
                     </div>
                 {% endfor %}
+            {% else %}
+                <p class="text-slate-500">No categories available.</p>
             {% endif %}
         </div>
     </div>
 </section>
-
-{% endblock content2 %}
+{% endblock content %}

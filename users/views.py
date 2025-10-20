@@ -17,13 +17,13 @@ def registerUserFormView(request):
             user.set_password(password)
             user.is_active = False
             user.save()
-            return redirect("sign-in")
+            return redirect("sign-up")
     else:
          form = UserRegisterForm()
     context = {
         "form": form,
     }
-    return render(request,"user/sign_in.html",context)
+    return render(request,"user/sign_up.html",context)
 
 # Activation User account and Wellcome message Send her mail:
 def activate_user(request,id,token):

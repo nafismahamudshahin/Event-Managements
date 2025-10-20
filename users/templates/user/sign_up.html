@@ -1,23 +1,36 @@
 {% extends "main_base.html" %}
+{% block title %}SIGN UP{% endblock title %}
 {% load static %}
-{% block title %}LOGIN{% endblock title %}
 {% block content %}
-    <section class="max-w-7xl mx-auto p-5">
+    {% comment %} non filed errors {% endcomment %}
+   <section class="max-w-7xl mx-auto p-5">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
                 <img src="{% static 'images/event-management.jpg' %}" alt="" class="w-full h-auto rounded-lg shadow-md">
             </div>
             <div>
+                {% comment %} non field errors {% endcomment %}
                 {% if form.non_field_errors %}
-                    <div class="mb-4 text-red-600 text-sm">
+                <div class="mb-4 text-red-600 text-sm">
                     {% for error in form.non_field_errors %}
-                        <p>{{ error }}</p>
+                        <p>{{error}}</p>
                     {% endfor %}
-                    </div>
+                </div>
                 {% endif %}
-                <h2 class="text-2xl mb-5 font-bold mb-6 text-gray-800">LOGIN</h2>
-                <form method="POST" action="">
+
+                <div>
+                    {% if messages %}
+                        {% for message in messages  %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <h2 class="text-2xl mb-5 font-bold mb-6 text-gray-800">Sign Up</h2>
+                {% comment %} sign in form {% endcomment %}
+                <form action="" method="POST">
                     {% csrf_token %}
+                    {% comment %} messages {% endcomment %}
                     {% if form %}
                         {% for field in form %}
                             {% comment %} filed errors {% endcomment %}
@@ -34,12 +47,11 @@
                             </p>
                         {% endfor %}
                     {% endif %}
-                     <button type="submit" class="w-full mt-3 py-3 bg-rose-500 text-white font-semibold rounded-md hover:opacity-90 transition">
-                        LOGIN
-                        </button>
+                    <button type="submit" class="w-full mt-3 py-3 bg-rose-500 text-white font-semibold rounded-md hover:opacity-90 transition">
+                        Sign Up
+                    </button>
                 </form>
             </div>
         </div>
     </section>
-
-  {% endblock content %}
+{% endblock content %}

@@ -150,7 +150,7 @@
         <!-- all Events Cards -->
         <div class="catetory_wise_events mt-8 grid justify-center md:grid-cols-2 lg:grid-cols-3 gap-5 ">
             <!-- card 1 -->
-             {% if events %}
+             {% comment %} {% if events %}
              {% for event  in events %}
              <div class="w-full">
                 <a href="{% url 'details' event.id %}" class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
@@ -182,7 +182,7 @@
                 </a>
             </div>
              {% endfor %}
-             {% endif %}
+             {% endif %} {% endcomment %}
         </div>
     </section>
 {% endblock content %}

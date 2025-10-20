@@ -14,10 +14,7 @@
     <div class="hidden md:flex gap-8 items-center font-medium">
       <ul class="flex gap-8 items-center">
         <li><a class="hover:text-rose-500 transition" href="{% url 'login' %}">LOGIN</a></li>
-        <li><a class="hover:text-rose-500 transition" href="{% url 'sign-in' %}">SIGN IN</a></li>
-        {% if request.user.is_authenticated %}
-         <li><a class="hover:text-rose-500 transition" href="{% url 'sign-in' %}">success</a></li>
-        {% endif %}
+        <li><a class="hover:text-rose-500 transition" href="{% url 'sign-up' %}">SIGN UP</a></li>
       </ul>
 
       <!-- Search Bar -->

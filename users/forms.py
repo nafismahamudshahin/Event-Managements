@@ -9,16 +9,21 @@ class StyledFormMixinextra:
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
 
-    default_classes = "border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+    default_classes = "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
 
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
             if isinstance(field.widget, forms.TextInput):
                 field.widget.attrs.update({
-                    'class': self.default_classes,
+                    'class': f"{self.default_classes}",
                     'placeholder': f"Enter {field.label.lower()}"
                 })
             elif isinstance(field.widget, forms.PasswordInput):
+                field.widget.attrs.update({
+                    'class': self.default_classes,
+                    'placeholder': f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.EmailField):
                 field.widget.attrs.update({
                     'class': self.default_classes,
                     'placeholder': f"Enter {field.label.lower()}"
@@ -47,11 +52,15 @@ class StyledFormMixinextra:
 
 class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
     password  = forms.CharField(widget=forms.PasswordInput , label="password")
-    confirm_password = forms.CharField(widget=forms.PasswordInput , label="Confirm password")
+    confirm_password = forms.CharField(widget=forms.PasswordInput , label="Confirm password" )
+    # email = forms.EmailField(widget=forms.EmailInput , label="Email" ,attrs={'placeholder': 'Enter your email'})
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email','password','confirm_password']
-        
+    
+        widgets ={
+            'email':forms.EmailInput(attrs={'placeholder':"Enter Your Email:"})
+        }
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email = email).exists():
@@ -74,12 +83,7 @@ class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
         errors = []
         if password != confirm_password:
             errors.append("Password and confirm password are not same.")
-        
-        # if username and password:
-        #     user = authenticate(username=username, password=password)
-        # if user is None:
-        #     errors.append("Invalid username or password.")
-        # self.user = user
+
         if errors:
             raise forms.ValidationError(errors)
         return cleaned_data
@@ -88,3 +92,18 @@ class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
 class UserLoginForm(StyledFormMixinextra , AuthenticationForm):
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        errors = []
+        if username and password:
+            user = authenticate(username=username, password=password)
+        if user is None:
+            errors.append("Invalid username or password.")
+        self.user = user
+
+        if errors:
+            raise forms.ValidationError(errors)
+        return cleaned_data

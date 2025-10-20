@@ -130,6 +130,8 @@ INTERNAL_IPS = [
     # ...
 ]
 
+LOGIN_URL ="login"
+
 FORNTEND_URL = "http://127.0.0.1:8000/"
 
 # send email configuration:

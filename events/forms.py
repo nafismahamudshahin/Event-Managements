@@ -3,11 +3,12 @@ from datetime import datetime
 # import model:
 from events.models import Event , Category 
 from events.styles import StyledFormMixin
+from users.forms import StyledFormMixinextra
 
-class CreateEventFrom(StyledFormMixin,forms.ModelForm):
+class CreateEventFrom(StyledFormMixinextra,forms.ModelForm):
     class Meta:
         model = Event
-        fields = "__all__"
+        fields = ['name','description','date','time','location','category']
         widgets = {
             "date": forms.SelectDateWidget,
             'time': forms.TimeInput(attrs={'type': 'time'}),
@@ -17,7 +18,7 @@ class CreateEventFrom(StyledFormMixin,forms.ModelForm):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
 
-class MakeCategoryFrom(StyledFormMixin,forms.ModelForm):
+class MakeCategoryFrom(StyledFormMixinextra,forms.ModelForm):
     class Meta:
         model = Category
         fields = "__all__"

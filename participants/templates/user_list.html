@@ -1,0 +1,73 @@
+{% extends "main_base.html" %}
+
+{% block content %}
+<section class="bg-gray-50 min-h-screen py-10">
+    <div class="max-w-7xl mx-auto px-5 py-8 bg-white border border-gray-200 shadow-sm rounded-xl">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">All Participants</h2>
+            <a href="{% url 'a-create-participint' %}" class="flex items-center gap-2 bg-indigo-600 border border-gray-200 text-black px-4 py-2 rounded-md font-medium hover:bg-indigo-500 shadow transition">
+                <i class="fa-solid fa-plus"></i>
+                <span>Create Participant</span>
+            </a>
+        </div>
+
+        <!-- users List -->
+        <div class="">
+<div class="overflow-x-auto">
+  <table class="w-full divide-y divide-gray-200">
+    <!-- Table Header -->
+    <thead class="bg-gray-100 text-gray-600 text-sm uppercase font-medium">
+      <tr>
+        <th class=" py-3 text-left">Name</th>
+        <th class=" py-3 text-left">Events</th>
+        <th class=" py-3 text-left">User ID</th>
+        <th class=" py-3 text-left">Role</th>
+        <th class=" py-3 text-left">Actions</th>
+      </tr>
+    </thead>
+
+    <!-- Table Body -->
+    <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700 border-none">
+      {% for user in users %}
+        <tr class="hover:bg-gray-50 transition">
+          <!-- Name -->
+          <td class="px-4 py-3 shadow font-medium text-gray-800">
+            {{ user.first_name|default:"Anonymous" }} {{ user.last_name }}
+          </td>
+
+          <!-- Events -->
+          <td class="px-4 py-3 shadow">
+            <div class="flex flex-wrap gap-1">
+              {% for event in user.event.all %}
+                <span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-xs">
+                  {{ event.name }}
+                </span>
+              {% endfor %}
+            </div>
+          </td>
+
+          <!-- ID -->
+          <td class="px-4 py-3 shadow">
+            {{ user.id }}
+          </td>
+
+          <!-- Role -->
+          <td class="px-4 py-3 shadow">
+            {{ user.groups.first.name|default:"Not assigned" }}
+          </td>
+          <!-- Actions -->
+          <td class="px-4 py-3 flex items-center gap-3 text-lg text-gray-500 shadow">
+            <a href="#" class="hover:text-yellow-500"><i class="fa-regular fa-pen-to-square"></i></a>
+            <a href="#" class="hover:text-red-500"><i class="fa-regular fa-trash-can"></i></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}

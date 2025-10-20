@@ -37,11 +37,11 @@ def register_participant_for_admin(request):
 
 # view Participant:
 def participant(request):
-    allParticipants = Participant.objects.all()
+    allUser = User.objects.all()
     context ={
-        "participants": allParticipants,
+        "users": allUser,
     }
-    return render(request,"participants.html",context)
+    return render(request,"user_list.html",context)
 
 
 def home(request):
@@ -49,7 +49,7 @@ def home(request):
     query = request.GET.get("search_query")
     todaytime = timezone.localdate(timezone.now())
 
-    events = Event.objects.select_related('category').prefetch_related('participant').all()
+    events = Event.objects.select_related('category').all()
     filter_events = None
     start = None
     end = None
