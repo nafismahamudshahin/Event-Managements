@@ -2,12 +2,13 @@ from django.shortcuts import render , redirect , HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from users.forms import UserRegisterForm
+from django.contrib.auth import login ,authenticate , logout
+from users.forms import UserRegisterForm , UserLoginForm
 # Create your views here.
 
 # user Register here:
 def registerUserFormView(request):
-    form = UserRegisterForm()
+   
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -17,7 +18,8 @@ def registerUserFormView(request):
             user.is_active = False
             user.save()
             return redirect("sign-in")
-        
+    else:
+         form = UserRegisterForm()
     context = {
         "form": form,
     }
@@ -46,7 +48,27 @@ def activate_user(request,id,token):
 
 # login and log out:
 def login_user(request):
-    pass
+    form= UserLoginForm()
+    if request.method == "POST":
+        form  = UserLoginForm(data = request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request,user)
+            sub = "Sumone login your account"
+            message = f"{user.first_name} are you sure now you are login your account"
+            form_mail = 'nafismahamudshahin@gmail.com'
+            redipient_mail = [user.email]
+            send_mail(sub,message,form_mail,redipient_mail)
+            print("problem")
+            return redirect("home")
+    context = {
+        'form':form,
+    }
+    return render(request,'user/login.html',context)
+
+
 
 def logout_user(request):
-    pass
+    if request.method == "POST":
+        logout(request)
+        return redirect("login")

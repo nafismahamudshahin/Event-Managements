@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate
 class StyledFormMixinextra:
     """ Mixing to apply style to form field"""
 
@@ -13,6 +14,11 @@ class StyledFormMixinextra:
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
             if isinstance(field.widget, forms.TextInput):
+                field.widget.attrs.update({
+                    'class': self.default_classes,
+                    'placeholder': f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.PasswordInput):
                 field.widget.attrs.update({
                     'class': self.default_classes,
                     'placeholder': f"Enter {field.label.lower()}"
@@ -40,13 +46,12 @@ class StyledFormMixinextra:
                 })
 
 class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    password  = forms.CharField(widget=forms.PasswordInput , label="password")
+    confirm_password = forms.CharField(widget=forms.PasswordInput , label="Confirm password")
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email','password','confirm_password']
-        widgets = {
-            'password': forms.PasswordInput
-        }
+        
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email = email).exists():
@@ -60,12 +65,26 @@ class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
             errors.append("Please give me atlist eight char Password.")
         if errors:
             raise forms.ValidationError(errors)
-
         return password
+    
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
+        errors = []
         if password != confirm_password:
-            raise forms.ValidationError("Password and confirm password are not same.")
+            errors.append("Password and confirm password are not same.")
+        
+        # if username and password:
+        #     user = authenticate(username=username, password=password)
+        # if user is None:
+        #     errors.append("Invalid username or password.")
+        # self.user = user
+        if errors:
+            raise forms.ValidationError(errors)
         return cleaned_data
+
+# login form:
+class UserLoginForm(StyledFormMixinextra , AuthenticationForm):
+    def __init__(self, *arg, **kwarg):
+        super().__init__(*arg, **kwarg)

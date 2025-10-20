@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+<header class="bg-gray-500 shadow ">
+    {% if request.user.is_authenticated %}
+        {% include "login_nav.html" %}
+        {% else %}
+        {% include "non_login_nav.html" %}
+    {% endif %}
+</header>
+<main>
+    {% block content %}
+
+    {% endblock content %}
+</main>
+
+
+{% comment %} footer area here {% endcomment %}
+<footer class="bg-gray-900 text-gray-300 py-8 mt-10">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <!-- About Section -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">About Us</h2>
+      <p class="text-sm">
+        Event Management System helps you to create, manage and track all your events easily.  
+        Stay organized and make your events successful with us.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">Quick Links</h2>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-white transition">Home</a></li>
+        <li><a href="#" class="hover:text-white transition">Events</a></li>
+        <li><a href="#" class="hover:text-white transition">Categories</a></li>
+        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div>
+      <h2 class="text-lg font-semibold text-white mb-3">Contact</h2>
+      <p class="text-sm">Email: support@nafis.com</p>
+      <p class="text-sm">Phone: +880 888999890</p>
+      <div class="flex space-x-4 mt-3">
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="text-center text-gray-500 text-sm border-t border-gray-700 mt-8 pt-4">
+    © 2025 Event Management System. All Rights Reserved.
+  </div>
+</footer>
+<script>
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
+</script>
+</body>
+</html>
