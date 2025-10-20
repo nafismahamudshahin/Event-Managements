@@ -7,5 +7,6 @@ urlpatterns = [
     path('',home),
     path('',include('events.urls')),
     path('',include('participants.urls')),
+    path('',include('users.urls'))
 ]+debug_toolbar_urls()
 
