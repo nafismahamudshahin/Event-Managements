@@ -54,8 +54,8 @@
       </div>
 
       {% comment %}  Book Now Button {% endcomment %}
-      <a href="{% url 'create-participint' %}" class="block text-center bg-rose-600 text-white font-semibold py-3 rounded-md hover:bg-rose-700 transition">
-        Book Now
+      <a href="{% url 'rsvp' event.id %}?next={{ request.path }}" class="block text-center bg-rose-600 text-white font-semibold py-3 rounded-md hover:bg-rose-700 transition">
+        Rsvp
       </a>
 
       {% comment %} Share Buttons {% endcomment %}

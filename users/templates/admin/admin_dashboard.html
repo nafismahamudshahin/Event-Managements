@@ -1,0 +1,106 @@
+{% extends "main_base.html" %}
+{% block title %}Admin{% endblock title %}
+{% block content %}
+<section>
+    <div class="max-w-7xl mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <!-- Total Participants -->
+        <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
+            <div class="flex justify-between items-center">
+                <h3 class="text-slate-600 text-sm font-semibold">Total Participants</h3>
+                <i class="fa-solid fa-users text-xl text-emerald-500"></i>
+            </div>
+            <b class="text-3xl mt-4 text-slate-900">{{ total_participants.total_count }}</b>
+            <small class="block mt-1 text-slate-500">Across all events</small>
+            <small class="block text-emerald-600 font-medium">+233 from last month</small>
+        </div>
+
+        <!-- Total Events -->
+        <a href="{% url 'admin-dashboard' %}?type=all" class="transition hover:scale-105">
+            <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-slate-600 text-sm font-semibold">Total Events</h3>
+                    <i class="fa-regular fa-calendar text-xl text-indigo-500"></i>
+                </div>
+                <b class="text-3xl mt-4 text-slate-900">{{ count.total }}</b>
+                <small class="block mt-1 text-slate-500">Across time events</small>
+                <small class="block text-emerald-600 font-medium">+6% from last month</small>
+            </div>
+        </a>
+
+        <!-- Upcoming Events -->
+        <a href="{% url 'admin-dashboard' %}?type=upcoming" class="transition hover:scale-105">
+            <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-slate-600 text-sm font-semibold">Upcoming Events</h3>
+                    <i class="fa-regular fa-calendar-days text-xl text-yellow-500"></i>
+                </div>
+                <b class="text-3xl mt-4 text-slate-900">{{ count.upcoming }}</b>
+                <small class="block mt-1 text-slate-500">Next 30 days</small>
+                <small class="block text-emerald-600 font-medium">+16% from last month</small>
+            </div>
+        </a>
+
+        <!-- Past Events -->
+        <a href="{% url 'admin-dashboard' %}?type=past" class="transition hover:scale-105">
+            <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-slate-600 text-sm font-semibold">Past Events</h3>
+                    <i class="fa-regular fa-clock text-xl text-pink-500"></i>
+                </div>
+                <b class="text-3xl mt-4 text-slate-900">{{ count.past }}</b>
+                <small class="block mt-1 text-slate-500">Completed events</small>
+                <small class="block text-emerald-600 font-medium">+16% from last month</small>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section>
+    <div class="max-w-7xl mx-auto py-6 px-5 bg-white border border-slate-200 rounded-xl shadow-md">
+        <div class="flex justify-between items-center">
+            <div class="font-semibold text-lg text-slate-800 flex items-center gap-2">
+                <i class="fa-regular fa-calendar text-indigo-500"></i>
+                <span>{{ event_name }}</span>
+            </div>
+            <div class="flex gap-2 mb-3">
+                <a href="{% url 'admin-dashboard' %}?type=todayevents" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Events</a>
+                <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 border border-gray-200 shadow text-black px-4 py-2 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-plus"></i> <span>Create Event</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-6 grid gap-4">
+            {% if events %}
+                {% for event in events %}
+                    <div class="flex justify-between items-center p-4 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition">
+                        <div>
+                            <h3 class="text-slate-800 font-semibold text-lg">{{ event.name }}</h3>
+                            <div class="text-slate-600 text-sm mt-1 flex flex-wrap gap-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-regular fa-clock"></i> <span>{{ event.time }}</span> <span>{{ event.date }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-location-dot"></i> <span>{{ event.location }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-people-group"></i> <span>150 participants</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg text-sm">{{ event.category.name }}</span>
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800"><i class="fa-regular fa-eye"></i></a>
+                            <a href="{% url 'edit-event' event.id %}" class="text-yellow-500 hover:text-yellow-700"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{% url 'delete-event' event.id %}" class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-slate-500">No events found.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

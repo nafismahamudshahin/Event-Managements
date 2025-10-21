@@ -1,5 +1,6 @@
-<!-- Navbar -->
+
 <nav class="py-5 bg-white">
+  <!-- Navbar -->
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
     <!-- Logo -->
     <div class="logo">
@@ -14,21 +15,15 @@
       <ul class="flex gap-3 items-center">
         <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition" href="#">HOME</a></li>
         <li>
-          <a href="{% url 'dashboard' %}" class="hover:text-rose-500 transition">
+          <a href="" class="hover:text-rose-500 transition">
                     <span >EVENTS</span>
           </a>
         </li>
         <li>
-          <a href="{% url 'category' %}" class="hover:text-rose-500 transition" >
-              <span >CATEGORY</span>
+          <a href="" class="hover:text-rose-500 transition" >
+              <span >CONTACT</span>
           </a>
         </li>
-        <li>
-          <a href="{% url 'participant' %}" class="hover:text-rose-500 transition">
-              <span >USERS</span>
-          </a>
-        </li>
-        {% comment %} <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li> {% endcomment %}
       </ul>
     </div>
     <!-- Search Bar -->
@@ -51,14 +46,10 @@
               </button>
               <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
                 <a
-                  href="{% url 'dashboard' %}"
+                  href=""
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500"
-                  >Dashboard</a>
-                <a
-                  href="" 
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">
-                  Profile
-                </a>
+                  >Profile</a
+                >
                 <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
                   <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">
@@ -119,4 +110,3 @@
     </ul>
   </div>
     </nav>
-

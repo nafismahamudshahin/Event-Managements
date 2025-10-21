@@ -9,10 +9,12 @@ from participants.forms import RegisterParticipantFrom
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 # chenged here
 
 # Create your views here.
 # Register Participant:
+@login_required
 def register_participant(request):
     if request.method == "POST":
         form = RegisterParticipantFrom(request.POST)
@@ -111,4 +113,25 @@ def delete_participant(request,id):
     return redirect("participant")
 
 
+@login_required
+def Rsvp(request , id):
+    url_r = request.GET.get('next','home')
+    event = Event.objects.get(id=id)
+    if request.user not in event.participant.all():
+        event.participant.add(request.user)
+        messages.success(request,"Successfully Register")
+        sub = "Successfully Register Event"
+        user = request.user
+        message = f"Hello , {user.first_name} {user.last_name}\nYou Registation Successfully Completed in {event.name}"
+        to_mail = [user.email]
+        mail_send(sub,message,to_mail)
+    else:
+        messages.success(request,"This Event you already book")
+    return redirect(url_r)
 
+def mail_send(sub, message , to_mail):
+    from_mail = 'nafismahamudshahin@gmail.com'
+    try:
+        send_mail(sub,message,from_mail,to_mail)
+    except Exception as e:
+        print(f"Messages not send for : {str(e)}")
