@@ -1,5 +1,5 @@
 {% extends "main_base.html" %}
-
+{% block title %}Organizer{% endblock title %}
 {% block content %}
 <section>
     <div class="max-w-7xl mx-auto my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -15,7 +15,7 @@
         </div>
 
         <!-- Total Events -->
-        <a href="{% url 'dashboard' %}?type=all" class="transition hover:scale-105">
+        <a href="{% url 'admin-dashboard' %}?type=all" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Total Events</h3>
@@ -28,7 +28,7 @@
         </a>
 
         <!-- Upcoming Events -->
-        <a href="{% url 'dashboard' %}?type=upcoming" class="transition hover:scale-105">
+        <a href="{% url 'admin-dashboard' %}?type=upcoming" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Upcoming Events</h3>
@@ -41,7 +41,7 @@
         </a>
 
         <!-- Past Events -->
-        <a href="{% url 'dashboard' %}?type=past" class="transition hover:scale-105">
+        <a href="{% url 'admin-dashboard' %}?type=past" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Past Events</h3>
@@ -64,7 +64,7 @@
                 <span>{{ event_name }}</span>
             </div>
             <div class="flex gap-2 mb-3">
-                <a href="{% url 'dashboard' %}?type=todayevents" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Events</a>
+                <a href="{% url 'admin-dashboard' %}?type=todayevents" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Events</a>
                 <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 border border-gray-200 shadow text-black px-4 py-2 rounded-lg font-medium transition">
                     <i class="fa-solid fa-plus"></i> <span>Create Event</span>
                 </a>
@@ -103,4 +103,4 @@
         </div>
     </div>
 </section>
-{% endblock %}
+{% endblock content %} 

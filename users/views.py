@@ -1,10 +1,68 @@
 from django.shortcuts import render , redirect , HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User , Group
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth import login ,authenticate , logout
 from users.forms import UserRegisterForm , UserLoginForm
+from events.views import is_admin , is_organizer , is_user
+from django.db.models import Q , Count
+from django.utils import timezone 
+from django.contrib.auth.decorators import login_required ,  user_passes_test
+# import Register form from from.py:
+from events.models import Participant ,Event
+from participants.views import mail_send
+
 # Create your views here.
+
+def dashboard(request):
+    if is_admin(request.user):
+        return redirect('admin-dashboard')
+    elif is_organizer(request.user):
+        return redirect('organizer-dashboard')
+    elif is_user(request.user):
+        return redirect('user-dashboard')
+    return redirect('no-access-page')
+
+
+# user Dashboard:
+def user_dashboard(request):
+    return render(request,'user/user_dashboard.html')
+
+# Organizer dashboard:
+def organizer_dashboard(request):
+    return render(request,"organizer/organizer_dashboard.html")
+
+# This dashboard Render for Admin:
+@login_required
+@user_passes_test(is_admin , login_url="no-access-page")
+def admin_dashboard(request):
+    type = request.GET.get('type',"all")
+    events = Event.objects.prefetch_related('category').all()
+    now = timezone.localtime(timezone.now())
+    counts_events = events.aggregate(
+        total=Count('id'),
+        upcoming=Count('id', filter=Q(date__gt=now.date()) | Q(date=now.date(), time__gt=now.time())),
+        past = Count('id', filter = Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
+    )
+    event_name = "All Event's"
+    if type =="todayevents":
+        events = events.filter(Q(date = now.date(), time__gt = now.time()))
+        event_name = "Today's Events"
+    elif type == "past":
+        events = events.filter(Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
+        event_name = "Past Events"
+    elif type == "upcoming":
+        events = events.filter(Q(date__gt=now.date()) | Q(date=now.date(),time__gt = now.time()))
+        event_name = "UpComing Events"
+
+    context ={
+        "events":events.order_by('date','time'),
+        'count':counts_events,
+        'event_name': event_name,
+        "total_participants": Participant.objects.aggregate(total_count = Count('id'))
+    }
+    return render(request,'admin/admin_dashboard.html',context)
+
 
 # user Register here:
 def registerUserFormView(request):
@@ -27,17 +85,17 @@ def registerUserFormView(request):
 
 # Activation User account and Wellcome message Send her mail:
 def activate_user(request,id,token):
+    print("word here")
     user = User.objects.get(id=id)
     try:
         if default_token_generator.check_token(user,token) and user.is_active == False:
             user.is_active = True
             user.save()
             subject = "congratulations 🎉"
-            form_mail = "nafismahamudshahin@gmail.com"
             message = f"HI,{user.first_name} {user.last_name}\nSuccessfully verify Your account."
             recipient_email = [user.email]
             try:
-                send_mail(subject,message,form_mail,recipient_email)
+                mail_send(subject,message,recipient_email)
             except Exception as e:
                 print(f"Email not send to {user.email}: {str(e)}")
             return redirect('home')

@@ -29,7 +29,9 @@
                 </div>
             
                 <div class="flex gap-4 flex-wrap">
-                    <a href="{% url 'create-participint' %}" class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition">BOOK NOW</a>
+                    {% if event %}
+                    <a href="{% url 'rsvp' event.id %}" class="px-6 py-3 bg-rose-500 rounded-lg font-semibold text-white border-2 border-rose-500 hover:bg-white hover:text-rose-500 transition">Rsvp</a>
+                    {% endif %}
                     <a href="{% url 'details' 2 %}" class="px-6 py-3 bg-white rounded-lg font-semibold text-rose-500 border-2 border-rose-500 hover:bg-rose-500 hover:text-white transition">VIEW DETAILS</a>
                 </div>
                 </div>
@@ -82,7 +84,9 @@
 
                 {% comment %} Right {% endcomment %}
                 <div class="flex items-center gap-4">
-                    <a href="{% url 'create-participint' %}" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">BOOK NOW</a>
+                    {% if event %}
+                    <a href="{% url 'rsvp' event.id %}" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">Rsvp</a>
+                    {% endif %}
                 </div>
             </div>
         </a>
@@ -127,7 +131,9 @@
             </div>
             <!-- Right -->
             <div class="flex items-center gap-4">
-                <a href="{% url 'create-participint' %}" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">BOOK NOW</a>
+                {% if event %}
+                <a href="{% url 'rsvp' event.id %}" class="px-4 py-2 bg-rose-500 text-white rounded-md font-medium hover:bg-rose-900 transition">Rsvp</a>
+                {% endif %}
             </div>
             </div>
         </a>
@@ -181,7 +187,9 @@
     
                     <!-- Footer -->
                     <div class="w-full py-3 flex items-center justify-center border-t border-gray-100">
-                        <a href="{% url 'create-participint' %}" class="text-rose-600 font-semibold hover:underline">Book Now</a>
+                       {% if event %}
+                       <a href="{% url 'rsvp' event.id %}" class="text-rose-600 font-semibold hover:underline">Rsvp</a>
+                       {% endif %}
                     </div>
                 </a>
             </div>

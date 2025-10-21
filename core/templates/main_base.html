@@ -9,14 +9,33 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
-<header class="bg-gray-500 shadow ">
-    {% if request.user.is_authenticated %}
-        {% include "login_nav.html" %}
-        {% else %}
-        {% include "non_login_nav.html" %}
-    {% endif %}
+  {% comment %} {% include "login_nav.html" %} {% endcomment %}
+  <header class="bg-gray-500 shadow ">
+
+  {% if request.user.is_authenticated %}
+      {% with request.user.groups.first as group %}
+          {% if group %}
+              {% if group.name == "User" %}
+                  {% include "user/user_nav.html" %}
+              {% elif group.name == "Admin" %}
+                  {% include "admin/admin_nav.html" %}
+              {% elif group.name == "Organizer" %}
+                  {% include "organizer/organizer_nav.html" %}
+              {% endif %}
+          {% endif %}
+      {% endwith %}
+  {% else %}
+      {% include "non_login_nav.html" %}
+  {% endif %}
+  {% if messages %}
+  <div id="message-box" class="fixed top-5 right-5 z-50 bg-rose-100 border border-rose-400 text-rose-700 px-4 py-3 rounded shadow-md">
+    {% for message in messages %}
+      <p class="font-semibold">{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
 </header>
-<main class="my-5">
+<main class="mb-5">
     {% block content %}
 
     {% endblock content %}
@@ -97,6 +116,14 @@
           document.getElementById("user-menu").classList.add("hidden");
         }
       });
+    // Auto-hide after 2 seconds (2000ms)
+    setTimeout(() => {
+      const msgBox = document.getElementById('message-box');
+      if (msgBox) {
+        msgBox.style.opacity = '0';
+        setTimeout(() => msgBox.remove(), 500); // Remove after fade out
+      }
+    }, 2000);
 </script>
 </body>
 </html>

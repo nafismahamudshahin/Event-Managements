@@ -2,11 +2,9 @@ from django.shortcuts import render ,redirect
 from django.db.models import Q , Count
 from django.contrib import messages
 from django.utils import timezone 
-from django.contrib.auth.models import Group , User
 from django.contrib.auth.decorators import login_required ,  user_passes_test
 # import Register form from from.py:
 from events.forms import CreateEventFrom , MakeCategoryFrom 
-from events.models import Participant
 
 # import Model:
 from events.models import Event ,Category
@@ -48,36 +46,7 @@ def register_category(request):
         form = MakeCategoryFrom()
     return render(request,'form.html',{'form':form,"form_title":"Catefory Register"})
 
-# This dashboard Render for Admin:
-@login_required
-@user_passes_test(is_admin , login_url="no-access-page")
-def admin_dashboard(request):
-    type = request.GET.get('type',"all")
-    events = Event.objects.prefetch_related('category').all()
-    now = timezone.localtime(timezone.now())
-    counts_events = events.aggregate(
-        total=Count('id'),
-        upcoming=Count('id', filter=Q(date__gt=now.date()) | Q(date=now.date(), time__gt=now.time())),
-        past = Count('id', filter = Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
-    )
-    event_name = "All Event's"
-    if type =="todayevents":
-        events = events.filter(Q(date = now.date(), time__gt = now.time()))
-        event_name = "Today's Events"
-    elif type == "past":
-        events = events.filter(Q(date__lt=now.date()) | Q(date=now.date(), time__lt=now.time()))
-        event_name = "Past Events"
-    elif type == "upcoming":
-        events = events.filter(Q(date__gt=now.date()) | Q(date=now.date(),time__gt = now.time()))
-        event_name = "UpComing Events"
 
-    context ={
-        "events":events.order_by('date','time'),
-        'count':counts_events,
-        'event_name': event_name,
-        "total_participants": Participant.objects.aggregate(total_count = Count('id'))
-    }
-    return render(request,'dashboard.html',context)
 
 # Category:
 def category_management(request):
@@ -97,7 +66,7 @@ def editEventInfo(request,id):
         if form.is_valid():
             form.save()
         messages.success(request,"Event updated Successfully")
-        return redirect('dashboard')
+        return redirect('admin-dashboard')
     return render(request,'form.html',{'form':form})
 
 # Delete Event:
