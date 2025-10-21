@@ -14,6 +14,7 @@ class Event(models.Model):
     date = models.DateField()
     time = models.TimeField()
     location = models.CharField()
+    image = models.ImageField(upload_to="events_images", blank=True, null=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default=1 ,related_name="category")
     user = models.ManyToManyField(User, related_name="event")
     def __str__(self):

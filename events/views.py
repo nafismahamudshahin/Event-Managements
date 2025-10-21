@@ -20,18 +20,18 @@ def is_user(user):
 
 # Create your views here.
 @login_required
+# @user_passes_test(is_organizer, login_url="no-access-page")
 @user_passes_test(is_admin, login_url="no-access-page")
-@user_passes_test(is_organizer, login_url="no-access-page")
 def register_event(request):
     if request.method == "POST":
-        form = CreateEventFrom(request.POST)
+        form = CreateEventFrom(request.POST , request.FILES)
         if form.is_valid():
             form.save()
         messages.success(request,"Event Register Successfully")
         return redirect('dashboard')
     else:
         form = CreateEventFrom()
-    return render(request,'form.html',{'form':form,"form_title":"Event Register"})
+    return render(request,'forms/event_form.html',{'form':form,"form_title":"Event Register"})
 
 # register category:
 @login_required

@@ -8,7 +8,7 @@ from users.forms import StyledFormMixinextra
 class CreateEventFrom(StyledFormMixinextra,forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name','description','date','time','location','category']
+        fields = ['name','description','date','time','location','image','category']
         widgets = {
             "date": forms.SelectDateWidget,
             'time': forms.TimeInput(attrs={'type': 'time'}),
