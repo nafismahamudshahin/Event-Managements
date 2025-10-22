@@ -1,16 +1,15 @@
 {% extends "main_base.html" %}
-{% load static %}
-{% block title %}User{% endblock title %}
+{% block title %}Events{% endblock title %}
 {% block content %}
 <section class="max-w-7xl mx-auto"> 
     <!-- all Events Cards -->
-    {% if user.rsvp_event.exists %}
-    <h1 class="text-2xl font-semibold px-6 pt-6">My Event Participation List</h1>
+     <h1 class="text-2xl font-semibold px-6 pt-6">All Event's</h1>
     <div class="catetory_wise_events mt-8 grid justify-center md:grid-cols-2 lg:grid-cols-3 gap-5 px-6">
         <!-- card 1 -->
-        {% for event  in user.rsvp_event.all %}
-        <div class="w-full">
-            <div class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+            {% if events %}
+            {% for event  in events %}
+            <div class="w-full">
+            <a href="{% url 'details' event.id %}" class="card max-w-sm bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
                 <div class="card_header relative">
                     <img src="{% if event.image %}
                         {{event.image.url}}
@@ -18,7 +17,7 @@
                             no images
                     {% endif %}" alt="" class="w-full h-56 object-cover" />
                     <span class="absolute bottom-3 left-3 bg-rose-600 text-white px-4 py-1 rounded-md text-sm font-semibold">
-                    {{event.participant.count}} participant
+                    500 Seat
                     </span>
                 </div>
                 <!-- Card Body -->
@@ -35,10 +34,17 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-800 leading-snug"> {{event.name}}</h2>
                 </div>
-            </div>
+    
+                <!-- Footer -->
+                <div class="w-full py-3 flex items-center justify-center border-t border-gray-100">
+                    {% if event %}
+                    <a href="{% url 'rsvp' event.id %}?next={{ request.path }}" class="text-rose-600 font-semibold hover:underline">Rsvp</a>
+                    {% endif %}
+                </div>
+            </a>
         </div>
             {% endfor %}
+            {% endif %}
     </div>
-    {% endif %}
 </section>
-{% endblock content %} 
+{% endblock content %}

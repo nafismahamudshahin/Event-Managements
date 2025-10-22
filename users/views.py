@@ -26,7 +26,11 @@ def dashboard(request):
 
 # user Dashboard:
 def user_dashboard(request):
-    return render(request,'user/user_dashboard.html')
+    user = request.user
+    context = {
+        "user":user,
+    }
+    return render(request,'user/user_dashboard.html' , context)
 
 # Organizer dashboard:
 def organizer_dashboard(request):
@@ -112,7 +116,7 @@ def login_user(request):
         if form.is_valid():
             user = form.get_user()
             login(request,user)
-            sub = "Sumone login your account"
+            sub = "Someone login your account"
             message = f"{user.first_name} are you sure now you are login your account"
             form_mail = 'nafismahamudshahin@gmail.com'
             redipient_mail = [user.email]

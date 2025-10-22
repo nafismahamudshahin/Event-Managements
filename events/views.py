@@ -31,6 +31,14 @@ def register_event(request):
         form = CreateEventFrom()
     return render(request,'forms/event_form.html',{'form':form,"form_title":"Event Register"})
 
+# view events:
+@login_required
+def events_view(request):
+    events = Event.objects.all()
+    context ={
+        'events': events
+    }
+    return render(request,"all_events.html", context)
 # register category:
 @login_required
 @user_passes_test(is_admin , login_url="no-access-page")

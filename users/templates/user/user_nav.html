@@ -15,8 +15,8 @@
       <ul class="flex gap-3 items-center">
         <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition" href="#">HOME</a></li>
         <li>
-          <a href="" class="hover:text-rose-500 transition">
-                    <span >EVENTS</span>
+          <a href="{% url 'all-events' %}" class="hover:text-rose-500 transition">
+            <span >EVENTS</span>
           </a>
         </li>
         <li>
@@ -45,6 +45,10 @@
                 />
               </button>
               <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
+                <a
+                  href="{% url 'dashboard' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500"
+                  >Dashboard</a>
                 <a
                   href=""
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500"
