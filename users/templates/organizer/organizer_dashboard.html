@@ -15,7 +15,7 @@
         </div>
 
         <!-- Total Events -->
-        <a href="{% url 'admin-dashboard' %}?type=all" class="transition hover:scale-105">
+        <a href="{% url 'organizer-dashboard' %}?type=all" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Total Events</h3>
@@ -28,7 +28,7 @@
         </a>
 
         <!-- Upcoming Events -->
-        <a href="{% url 'admin-dashboard' %}?type=upcoming" class="transition hover:scale-105">
+        <a href="{% url 'organizer-dashboard' %}?type=upcoming" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Upcoming Events</h3>
@@ -41,7 +41,7 @@
         </a>
 
         <!-- Past Events -->
-        <a href="{% url 'admin-dashboard' %}?type=past" class="transition hover:scale-105">
+        <a href="{% url 'organizer-dashboard' %}?type=past" class="transition hover:scale-105">
             <div class="flex flex-col rounded-xl p-6 shadow-md bg-white border border-slate-200 hover:shadow-lg transition duration-300">
                 <div class="flex justify-between items-center">
                     <h3 class="text-slate-600 text-sm font-semibold">Past Events</h3>
@@ -64,7 +64,7 @@
                 <span>{{ event_name }}</span>
             </div>
             <div class="flex gap-2 mb-3">
-                <a href="{% url 'admin-dashboard' %}?type=todayevents" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Events</a>
+                <a href="{% url 'organizer-dashboard' %}?type=todayevents" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Events</a>
                 <a href="{% url 'create-event' %}" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 border border-gray-200 shadow text-black px-4 py-2 rounded-lg font-medium transition">
                     <i class="fa-solid fa-plus"></i> <span>Create Event</span>
                 </a>
@@ -85,13 +85,12 @@
                                     <i class="fa-solid fa-location-dot"></i> <span>{{ event.location }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-people-group"></i> <span>150 participants</span>
+                                    <i class="fa-solid fa-people-group"></i> <span>{{event.participant.count}} participants</span>
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg text-sm">{{ event.category.name }}</span>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800"><i class="fa-regular fa-eye"></i></a>
                             <a href="{% url 'edit-event' event.id %}" class="text-yellow-500 hover:text-yellow-700"><i class="fa-regular fa-pen-to-square"></i></a>
                             <a href="{% url 'delete-event' event.id %}" class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></a>
                         </div>

@@ -9,12 +9,13 @@ from participants.forms import RegisterParticipantFrom
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , user_passes_test
+from events.views import is_admin
 # chenged here
 
 # Create your views here.
 # Register Participant:
-@login_required
+# @login_required
 def register_participant(request):
     if request.method == "POST":
         form = RegisterParticipantFrom(request.POST)
@@ -38,6 +39,8 @@ def register_participant_for_admin(request):
     return render(request,'form.html',{'form':form,"form_title":"Participant Register"})
 
 # view Participant:
+# @login_required
+# @user_passes_test(is_admin, login_url="no-access-page")
 def participant(request):
     allUser = User.objects.all()
     context ={

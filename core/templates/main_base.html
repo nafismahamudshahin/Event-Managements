@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
-  {% comment %} {% include "login_nav.html" %} {% endcomment %}
   <header class="bg-gray-500 shadow ">
-
   {% if request.user.is_authenticated %}
       {% with request.user.groups.first as group %}
           {% if group %}
@@ -19,7 +17,7 @@
                   {% include "user/user_nav.html" %}
               {% elif group.name == "Admin" %}
                   {% include "admin/admin_nav.html" %}
-              {% elif group.name == "Organizer" %}
+              {% elif group.name == "organizer" %}
                   {% include "organizer/organizer_nav.html" %}
               {% endif %}
           {% endif %}

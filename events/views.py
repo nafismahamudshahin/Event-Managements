@@ -12,14 +12,20 @@ from events.models import Event ,Category
 def is_admin(user):
     return user.groups.filter(name="Admin").exists()
 def is_organizer(user):
-    return user.groups.filter(name="Organizer").exists()
+    print("problem there")
+    print(f"{user.username}")
+    print(user.groups.first().name)
+    # user = user.groups.filter(name="0rganizer").exists()
+    user = user.groups.filter(name="organizer").exists()
+    print(user)
+    return user
 def is_user(user):
     return user.groups.filter(name="User").exists()
 
 # Create your views here.
-@login_required
+# @login_required
 # @user_passes_test(is_organizer, login_url="no-access-page")
-@user_passes_test(is_admin, login_url="no-access-page")
+# @user_passes_test(is_admin, login_url="no-access-page")
 def register_event(request):
     if request.method == "POST":
         form = CreateEventFrom(request.POST , request.FILES)
@@ -32,7 +38,7 @@ def register_event(request):
     return render(request,'forms/event_form.html',{'form':form,"form_title":"Event Register"})
 
 # view events:
-@login_required
+# @login_required
 def events_view(request):
     events = Event.objects.all()
     context ={
@@ -40,9 +46,9 @@ def events_view(request):
     }
     return render(request,"all_events.html", context)
 # register category:
-@login_required
-@user_passes_test(is_admin , login_url="no-access-page")
-@user_passes_test(is_organizer, login_url="no-access-page")
+# @login_required
+# @user_passes_test(is_admin , login_url="no-access-page")
+# @user_passes_test(is_organizer, login_url="no-access-page")
 def register_category(request):
     if request.method == "POST":
         form = MakeCategoryFrom(request.POST)
@@ -57,8 +63,8 @@ def register_category(request):
 
 
 # Category:
-def category_management(request):
-    all_categorys = Category.objects.all()
+def category_view(request):
+    all_categorys = Category.objects.prefetch_related("category").all()
     context={
         "categprys": all_categorys,
     }
