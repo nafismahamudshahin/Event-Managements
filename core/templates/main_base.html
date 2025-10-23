@@ -7,11 +7,10 @@
     <title>{% block title %}{% endblock title %}</title>
     <script src="https://kit.fontawesome.com/39f0ad8315.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-  {% comment %} {% include "login_nav.html" %} {% endcomment %}
   <header class="bg-gray-500 shadow ">
-
   {% if request.user.is_authenticated %}
       {% with request.user.groups.first as group %}
           {% if group %}
@@ -19,7 +18,7 @@
                   {% include "user/user_nav.html" %}
               {% elif group.name == "Admin" %}
                   {% include "admin/admin_nav.html" %}
-              {% elif group.name == "Organizer" %}
+              {% elif group.name == "organizer" %}
                   {% include "organizer/organizer_nav.html" %}
               {% endif %}
           {% endif %}
@@ -27,15 +26,26 @@
   {% else %}
       {% include "non_login_nav.html" %}
   {% endif %}
+  {% comment %} show all action messages {% endcomment %}
   {% if messages %}
-  <div id="message-box" class="fixed top-5 right-5 z-50 bg-rose-100 border border-rose-400 text-rose-700 px-4 py-3 rounded shadow-md">
+  <div id="message-box"
+    class="fixed top-5 right-5 z-50 
+    {% if message.tags == "success" %}
+      bg-pink-200 text-white 
+    {% else %}
+      bg-red-500 text-block
+    {% endif %} 
+    border border-rose-400 px-4 py-3 rounded shadow-md"
+  
+  >
     {% for message in messages %}
       <p class="font-semibold">{{ message }}</p>
     {% endfor %}
   </div>
   {% endif %}
+
 </header>
-<main class="mb-5">
+<main class="mb-5 mx-3">
     {% block content %}
 
     {% endblock content %}
@@ -85,43 +95,72 @@
   </div>
 </footer>
 <script>
-    const menuBtn = document.getElementById("menu-btn");
+const menuBtn = document.getElementById("menu-btn"); // if exists
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  // ===== Dashboard Toggle (your navbar button) =====
+  const dashboardMenuToggle = document.getElementById("menu-toggle");
+  if (dashboardMenuToggle) {
+    dashboardMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  // ===== User Dropdown =====
+  const userMenuBtn = document.getElementById("user-menu-btn");
+  const userMenu = document.getElementById("user-menu");
+
+  if (userMenuBtn && userMenu) {
+    userMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userMenu.classList.toggle("hidden");
+    });
+
+    // Close when clicking outside
+    window.addEventListener("click", (e) => {
+      if (!userMenuBtn.contains(e.target)) {
+        userMenu.classList.add("hidden");
+      }
+    });
+  }
+
+
+
+
+    {% comment %} const menuBtn = document.getElementById("menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
 
     menuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
     });
-    document
-        .getElementById("menu-toggle")
-        .addEventListener("click", function () {
-          document.getElementById("mobile-menu").classList.toggle("hidden");
-        });
 
-        {% comment %} for dashboard {% endcomment %}
-         document
-        .getElementById("menu-toggle")
-        .addEventListener("click", function () {
-          document.getElementById("mobile-menu").classList.toggle("hidden");
-        });
+    {% comment %} for dashboard {% endcomment %}
+      {% comment %} document.getElementById("menu-toggle").addEventListener("click", function () {
+      document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
 
-      document
-        .getElementById("user-menu-button")
-        .addEventListener("click", function () {
-          document.getElementById("user-menu").classList.toggle("hidden");
-        });
+    document.getElementById("user-menu-button").addEventListener("click", function () {
+        document.getElementById("user-menu").classList.toggle("hidden");
+    }); {% endcomment %}
 
-      // Close the dropdown when clicking outside
-      window.addEventListener("click", function (e) {
+      {% comment %} // Close the dropdown when clicking outside
+    window.addEventListener("click", function (e) {
         if (!document.getElementById("user-menu-button").contains(e.target)) {
           document.getElementById("user-menu").classList.add("hidden");
         }
-      });
-    // Auto-hide after 2 seconds (2000ms)
+    }); {% endcomment %}
+
+
     setTimeout(() => {
       const msgBox = document.getElementById('message-box');
       if (msgBox) {
         msgBox.style.opacity = '0';
-        setTimeout(() => msgBox.remove(), 500); // Remove after fade out
+        setTimeout(() => msgBox.remove(), 500);
       }
     }, 2000);
 </script>

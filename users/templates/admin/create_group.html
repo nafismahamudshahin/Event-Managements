@@ -1,10 +1,9 @@
 {% extends "main_base.html" %}
-{% load static %}
 {% block content %}
-    <section class="">
+<section class="">
         <div class="md:w-1/3 mx-2 text-black mt-5 rounded-lg p-5 shadow-2xl bg-transparent border border-neutral-900 md:m-auto">
             <h1 class="text-center text-black text-2xl pb-5 font-semibold">{{form_title |upper}}</h1>
-            <form  action="" method="POST" enctype='multipart/form-data'>
+            <form  action="" method="POST">
                 {% csrf_token %}
                 {% if messages %}
                     {% for message in messages  %}
