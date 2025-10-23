@@ -1,6 +1,5 @@
 from pathlib import Path
 from decouple import config
-from core.tests import password,email
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,17 +73,24 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'events_management',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'events_management',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
 
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://neondb_owner:npg_yjd0Oqz2xmRV@ep-mute-hat-a1lek8s9-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+        conn_max_age=600
+    )
+}
 
 
 # web online database:
@@ -161,9 +167,17 @@ FORNTEND_URL = "http://127.0.0.1:8000/"
 # EMAIL_PORT = config("SMTP_EMAIL_PORT")
 # EMAIL_HOST_USER = config("SMTP_EMAIL_HOST_USER")
 # EMAIL_HOST_PASSWORD = config("SMTP_EMAIL_HOST_PASSWORD")
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = email
+# EMAIL_HOST_PASSWORD = password
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = email
-EMAIL_HOST_PASSWORD = password
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nafismahamudshahin@gmail.com'
+EMAIL_HOST_PASSWORD = 'dkjl ixvq tygo ahlc'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER 
