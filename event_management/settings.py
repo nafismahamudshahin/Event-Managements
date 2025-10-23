@@ -157,7 +157,7 @@ INTERNAL_IPS = [
 
 LOGIN_URL ="login"
 
-FORNTEND_URL = "http://127.0.0.1:8000/"
+FORNTEND_URL = "https://event-managements-pne0.onrender.com/"
 
 # send email configuration:
 # send mail:
