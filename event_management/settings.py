@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+from core.tests import password,email
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,9 +155,15 @@ FORNTEND_URL = "http://127.0.0.1:8000/"
 
 # send email configuration:
 # send mail:
-EMAIL_BACKEND = config("SMTP_EMAIL_BACKEND")
-EMAIL_HOST = config("SMTP_EMAIL_HOST")
-EMAIL_USE_TLS = config("SMTP_EMAIL_USE_TLS")
-EMAIL_PORT = config("SMTP_EMAIL_PORT")
-EMAIL_HOST_USER = config("SMTP_EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("SMTP_EMAIL_HOST_PASSWORD")
+# EMAIL_BACKEND = config("SMTP_EMAIL_BACKEND")
+# EMAIL_HOST = config("SMTP_EMAIL_HOST")
+# EMAIL_USE_TLS = config("SMTP_EMAIL_USE_TLS")
+# EMAIL_PORT = config("SMTP_EMAIL_PORT")
+# EMAIL_HOST_USER = config("SMTP_EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("SMTP_EMAIL_HOST_PASSWORD")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = email
+EMAIL_HOST_PASSWORD = password

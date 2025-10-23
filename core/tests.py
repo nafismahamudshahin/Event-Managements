@@ -2,5 +2,5 @@ from django.test import TestCase
 
 # Create your tests here.
 
-app_password = "sdfs"
+password = "dkjl ixvq tygo ahlc"
 email = "nafismahamudsdhahin@gmail.com"
