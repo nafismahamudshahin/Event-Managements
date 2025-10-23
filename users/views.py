@@ -156,7 +156,7 @@ def activate_user(request,id,token):
                 send_mail_to_user(subject,message,recipient_email)
             except Exception as e:
                 print(f"Email not send to {user.email}: {str(e)}")
-            messages.success(request,"Now Active acount")
+            messages.success(request,"Now Your account is Active")
             return redirect('login')
         else:
             return HttpResponse("invalid id or token")

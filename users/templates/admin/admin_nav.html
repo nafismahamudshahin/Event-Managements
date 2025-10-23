@@ -147,7 +147,6 @@
 
         <div id="user-menu" class="hidden absolute right-0 mt-3 w-48 bg-white border rounded-md shadow-lg py-1">
           <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">Dashboard</a>
-          <li><a href="{% url 'all-events' %}" class="hover:text-rose-500 transition" >EVENT</a></li>
           <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">Profile</a>
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}

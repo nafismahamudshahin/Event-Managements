@@ -56,7 +56,7 @@
       <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition">HOME</a></li>
       <li><a href="{% url 'category' %}" class="hover:text-rose-500 transition">CATEGORY</a></li>
       <li><a href="{% url 'dashboard' %}" class="hover:text-rose-500 transition">DASHBOARD</a></li>
-      <li><a href="" class="hover:text-rose-500 transition">Profile</a></li>
+      <li><a href="{% url 'profile' %}" class="hover:text-rose-500 transition">Profile</a></li>
       <li><a href="{% url 'logout' %}" class="hover:text-rose-500 transition">Logout</a></li>
       <!-- Mobile Search -->
       <form method="GET" action="{% url 'home' %}" class="flex items-center border rounded-lg overflow-hidden">
