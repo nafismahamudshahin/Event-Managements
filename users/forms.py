@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User , Permission , Group
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 class StyledFormMixinextra:
@@ -35,17 +35,14 @@ class StyledFormMixinextra:
                     'rows': 5
                 })
             elif isinstance(field.widget, forms.SelectDateWidget):
-                # print("Inside Date")
                 field.widget.attrs.update({
                     "class": "border-2 border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
                 })
             elif isinstance(field.widget, forms.CheckboxSelectMultiple):
-                # print("Inside checkbox")
                 field.widget.attrs.update({
                     'class': "space-y-2"
                 })
             else:
-                # print("Inside else")
                 field.widget.attrs.update({
                     'class': self.default_classes
                 })
@@ -53,7 +50,6 @@ class StyledFormMixinextra:
 class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
     password  = forms.CharField(widget=forms.PasswordInput , label="password")
     confirm_password = forms.CharField(widget=forms.PasswordInput , label="Confirm password" )
-    # email = forms.EmailField(widget=forms.EmailInput , label="Email" ,attrs={'placeholder': 'Enter your email'})
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email','password','confirm_password']
@@ -107,3 +103,25 @@ class UserLoginForm(StyledFormMixinextra , AuthenticationForm):
         if errors:
             raise forms.ValidationError(errors)
         return cleaned_data
+
+class ChangeRoleForm(StyledFormMixinextra , forms.Form):
+    choice_role = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        to_field_name='name',
+        empty_label="Select a role"
+    )
+
+#form for create group
+class GroupForm(StyledFormMixinextra ,forms.Form):
+    name = forms.CharField(
+        label="Group Name",
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Enter group name'
+        })
+    )
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Select Permissions"
+    )

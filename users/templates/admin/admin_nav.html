@@ -1,4 +1,4 @@
-<!-- Navbar -->
+{% comment %} <!-- Navbar -->
 <nav class="py-5 bg-white">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
     <!-- Logo -->
@@ -13,22 +13,8 @@
     <div class="hidden md:flex gap-4 items-center font-medium">
       <ul class="flex gap-3 items-center">
         <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition" href="#">HOME</a></li>
-        <li>
-          <a href="{% url 'dashboard' %}" class="hover:text-rose-500 transition">
-                    <span >EVENTS</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'category' %}" class="hover:text-rose-500 transition" >
-              <span >CATEGORY</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'participant' %}" class="hover:text-rose-500 transition">
-              <span >USERS</span>
-          </a>
-        </li>
-        {% comment %} <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li> {% endcomment %}
+        <li> <a href="{% url 'category' %}" class="hover:text-rose-500 transition" >CATEGORY</a></li>
+        <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li>
       </ul>
     </div>
     <!-- Search Bar -->
@@ -103,6 +89,7 @@
   <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
     <ul class="flex flex-col gap-4 p-6 font-medium">
       <li><a class="hover:text-rose-500" href="{% url 'home' %}">HOME</a></li>
+      <li> <a href="{% url 'category' %}" class="hover:text-rose-500 transition" >CATEGORY</a></li>
       <li><a class="hover:text-rose-500" href="{% url 'dashboard' %}">DASHBOARD</a></li>
       <li>
         <!-- Mobile Search -->
@@ -119,4 +106,77 @@
     </ul>
   </div>
     </nav>
+ {% endcomment %}
 
+
+ <!-- Navbar -->
+<nav class="py-4 bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+    <!-- Logo -->
+    <div class="logo">
+      <h1 class="text-2xl md:text-3xl font-bold">
+        <span class="text-rose-500">E</span>vent
+        <span class="text-rose-500">M</span>aster
+      </h1>
+    </div>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center gap-6">
+      <ul class="flex gap-5 font-medium text-gray-700">
+        <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition">HOME</a></li>
+        <li><a href="{% url 'category' %}" class="hover:text-rose-500 transition">CATEGORY</a></li>
+        <li><a href="{% url 'dashboard' %}" class="hover:text-rose-500 transition">DASHBOARD</a></li>
+      </ul>
+
+      <!-- Search Bar -->
+      <form method="GET" action="{% url 'home' %}" class="flex items-center border rounded-lg overflow-hidden">
+        <input type="text" name="search_query" placeholder="Search events..."
+               class="px-3 py-2 outline-none text-sm" />
+        <button type="submit" class="px-3 py-2 bg-rose-500 text-white hover:bg-rose-600 transition">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <!-- User Dropdown -->
+      <div class="relative">
+        <button id="user-menu-btn" class="ml-4 flex items-center focus:outline-none">
+          <img src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+               alt="User avatar" class="w-10 h-10 rounded-full object-cover border border-gray-200" />
+        </button>
+
+        <div id="user-menu" class="hidden absolute right-0 mt-3 w-48 bg-white border rounded-md shadow-lg py-1">
+          <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">Dashboard</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">Profile</a>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-rose-500">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+      <i class="fa-solid fa-bars text-rose-500"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+    <ul class="flex flex-col gap-4 p-6 font-medium text-gray-700">
+      <li><a href="{% url 'home' %}" class="hover:text-rose-500 transition">HOME</a></li>
+      <li><a href="{% url 'category' %}" class="hover:text-rose-500 transition">CATEGORY</a></li>
+      <li><a href="{% url 'dashboard' %}" class="hover:text-rose-500 transition">DASHBOARD</a></li>
+      <li><a href="" class="hover:text-rose-500 transition">Profile</a></li>
+      <li><a href="{% url 'logout' %}" class="hover:text-rose-500 transition">Logout</a></li>
+      <!-- Mobile Search -->
+      <form method="GET" action="{% url 'home' %}" class="flex items-center border rounded-lg overflow-hidden">
+        <input type="text" name="search_query" placeholder="Search events..."
+               class="px-3 py-2 outline-none text-sm w-full" />
+        <button type="submit" class="px-3 py-2 bg-rose-500 text-white hover:bg-rose-600 transition">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </ul>
+  </div>
+</nav>
