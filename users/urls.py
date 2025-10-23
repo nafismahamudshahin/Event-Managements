@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import registerUserFormView , activate_user , login_user , logout_user , dashboard ,admin_dashboard, user_dashboard , organizer_dashboard, change_role , create_group , delete_group
+from users.views import registerUserFormView , activate_user,profile ,delete_user, login_user , logout_user , dashboard ,admin_dashboard, user_dashboard , organizer_dashboard, change_role , create_group , delete_group
 
 urlpatterns = [
     path('sign-up/',registerUserFormView, name='sign-up'),
@@ -12,5 +12,7 @@ urlpatterns = [
     path('organizer-dashboard/',organizer_dashboard,name="organizer-dashboard"),
     path('create-group/',create_group,name="create-group"),
     path('delete-group/<int:id>/',delete_group,name="delete-group"),
-    path('change-role/<int:id>/',change_role,name="change-role")
+    path('delete-user/<int:id>/',delete_user,name="delete-user"),
+    path('change-role/<int:id>/',change_role,name="change-role"),
+    path('profile',profile,name="profile"),
 ]

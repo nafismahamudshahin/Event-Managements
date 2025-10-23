@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}User{% endblock title %}
 {% block content %}
-<section class="max-w-7xl mx-auto"> 
+<section class="max-w-7xl mx-auto mt-8"> 
     <!-- all Events Cards -->
     {% if user.rsvp_event.exists %}
     <h1 class="text-2xl font-semibold px-6 pt-6">My Event Participation List</h1>
@@ -38,6 +38,8 @@
             </div>
         </div>
             {% endfor %}
+        {% else %}
+        <h1 class="text-center">You not register any Event</h1>
     </div>
     {% endif %}
 </section>

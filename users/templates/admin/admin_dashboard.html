@@ -76,9 +76,7 @@
                 <i class="fa-regular fa-calendar text-indigo-500"></i>
                 <span>{{ event_name }}</span>
             </div>
-            <div class="flex gap-2 mb-3">
-                <a href="" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 border border-gray-200 shadow rounded-lg font-medium transition">Show Today's Register Users</a>
-            </div>
+            
         </div>
 
         <div class="mt-6 grid gap-4">
@@ -103,7 +101,11 @@
                             <a href="{% url 'change-role' participant.id %}" class="text-yellow-500 hover:text-yellow-700">
                                 <i class="fa-regular fa-pen-to-square"></i> 
                             </a>
-                            <a href="" class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></a>
+                            <form action="{% url 'delete-user' participant.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
+                            </form>
+                            
                         </div>
                     </div>
                 {% endfor %}

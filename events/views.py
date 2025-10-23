@@ -82,7 +82,7 @@ def deleteEvent(request,id):
 def edit_category(request,id):
     category = Category.objects.get(id=id)
     populate_form = MakeCategoryFrom(instance = category)
-    if request == "POST":
+    if request.method == "POST":
         populate_form = MakeCategoryFrom(request.POST, instance = category)
         if populate_form.is_valid():
             populate_form.save()

@@ -156,13 +156,14 @@ def activate_user(request,id,token):
                 send_mail_to_user(subject,message,recipient_email)
             except Exception as e:
                 print(f"Email not send to {user.email}: {str(e)}")
-            return redirect('home')
+            messages.success(request,"Now Active acount")
+            return redirect('login')
         else:
             return HttpResponse("invalid id or token")
     except Exception as e:
         return HttpResponse(f"{str(e)}")
 
-# login and log out:
+# login user:
 def login_user(request):
     form= UserLoginForm()
     if request.method == "POST":
@@ -183,7 +184,7 @@ def login_user(request):
     return render(request,'user/login.html',context)
 
 
-
+# user logout :
 def logout_user(request):
     if request.method == "POST":
         logout(request)
@@ -229,6 +230,7 @@ def create_group(request):
     return render(request,"admin/create_group.html",{'form':form})
 
 # delete group:
+@user_passes_test(is_admin,login_url="no-access-page")
 def delete_group(request,id):
     group = Group.objects.get(id=id)
     group_name = group.name
@@ -238,3 +240,23 @@ def delete_group(request,id):
     else:
         messages.error(request,"group not delete.")
     return redirect("dashboard")
+
+# delete User:
+@user_passes_test(is_admin,login_url="no-access-page")
+def delete_user(request,id):
+    user = User.objects.get(id=id)
+    if request.method == "POST":
+        user.delete()
+        messages.success(request,"User Delete Successfully")
+    else:
+        messages.error(request,"Not Delete")
+    return redirect("dashboard")
+
+
+# user Profile:
+def profile(request):
+    user = request.user
+    context = {
+        'user': user
+    }
+    return render(request,"profile.html",context)
