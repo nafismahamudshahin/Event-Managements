@@ -2,19 +2,21 @@ from django.shortcuts import render ,redirect
 from django.utils.decorators import method_decorator
 from django.db.models import Q , Count
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required ,  user_passes_test
-from core.views import is_admin_or_organizer
+from django.views.generic import CreateView , ListView , UpdateView , DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# import Register form from from.py:
-
-from events.forms import CreateEventFrom , MakeCategoryFrom 
+# import from my file:
 from core.views import is_admin , is_organizer, is_user , is_admin_or_organizer , send_mail_to_user
-# import Model:
+from core.views import is_admin_or_organizer
+from events.forms import CreateEventFrom , MakeCategoryFrom 
 from events.models import Event ,Category
-from django.views.generic import CreateView
 
+# this decorator store parmission for admin and organizer:
 create_decorator = [login_required,user_passes_test(is_admin_or_organizer, login_url="no-permission")]
 
+# Register Event view:
 @method_decorator(create_decorator , name="dispatch")
 class RegisterEventView(CreateView):
     model = Event
@@ -31,84 +33,93 @@ class RegisterEventView(CreateView):
         messages.success(self.request,"Event Register Successfully")
         return redirect("dashboard")
         
+#view Events
+class EventView(LoginRequiredMixin , ListView):
+    model = Event
+    template_name = "all_events.html"
+    context_object_name = "events"
+
+# Register Category:
+@method_decorator(create_decorator , name="dispatch")
+class RegisterCategoryView(CreateView):
+    model = Category
+    form_class = MakeCategoryFrom
+    template_name = "form.html"
+    success_url = reverse_lazy('category')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = "Category Register"
+        return context
     
+    def get_success_url(self):
+        messages.success(self.request,"Category Register Successfully")
+        return super().get_success_url()
 
-# view events:
-@login_required
-def events_view(request):
-    events = Event.objects.all()
-    context ={
-        'events': events
-    }
-    return render(request,"all_events.html", context)
+# view all Category
+@method_decorator(create_decorator , name="dispatch")
+class CategoryView(ListView):
+    model = Category
+    template_name = "category.html"
 
-# register category:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def register_category(request):
-    if request.method == "POST":
-        form = MakeCategoryFrom(request.POST)
-        if form.is_valid():
-            form.save()
-        messages.success(request,"Category Register Successfully")
-        return redirect('category')
-    else:
-        form = MakeCategoryFrom()
-    return render(request,'form.html',{'form':form,"form_title":"Catefory Register"})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categorys"] = Category.objects.prefetch_related("category").all() 
+        return context
 
+# Update Event:
+@method_decorator(create_decorator , name="dispatch")
+class EditEventView(UpdateView):
+    model = Event
+    form_class = CreateEventFrom
+    template_name = "form.html"
+    pk_url_kwarg = "id"
+    success_url = reverse_lazy("dashboard")
 
-
-# Category:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def category_view(request):
-    all_categorys = Category.objects.prefetch_related("category").all()
-    context={
-        "categprys": all_categorys,
-    }
-    return render(request,"category.html",context)
-
-
-# Edit Event information:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def editEventInfo(request,id):
-    event = Event.objects.get(id=id)
-    form = CreateEventFrom(instance = event)
-    if request.method == "POST":
-        form = CreateEventFrom(request.POST,instance = event)
-        if form.is_valid():
-            form.save()
-        messages.success(request,"Event updated Successfully")
-        return redirect('dashboard')
-    return render(request,'form.html',{'form':form})
+    def get_success_url(self):
+        messages.success(self.request, "Event updated Successfully")
+        return super().get_success_url()
 
 # Delete Event:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def deleteEvent(request,id):
-    event = Event.objects.get(id=id)
-    event.delete()
-    messages.success(request,"Event delete Successfully")
-    return redirect('dashboard')
+@method_decorator(create_decorator , name="dispatch")
+class DeleteEventView(DeleteView):
+    model = Event
+    template_name = "confirm.html"
+    pk_url_kwarg = "id"
+    success_url = reverse_lazy("dashboard")
+
+    def get_success_url(self):
+        messages.success(self.request,"Event delete Successfully")
+        return super().get_success_url()
+    
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 #Edit Category:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page") #problem here not updated error
-def edit_category(request,id):
-    category = Category.objects.get(id=id)
-    populate_form = MakeCategoryFrom(instance = category)
-    if request.method == "POST":
-        populate_form = MakeCategoryFrom(request.POST, instance = category)
-        if populate_form.is_valid():
-            populate_form.save()
-            messages.success(request,"Category Updated Successfully")
-            return redirect('category')
-        else:
-            messages.error(request,"Not Updated")
-            return redirect("category")
-    return render(request,"form.html",{'form':populate_form})
+@method_decorator(create_decorator , name="dispatch")
+class UpdateCategoryView(UpdateView):
+    model = Category
+    form_class = MakeCategoryFrom
+    template_name = "form.html"
+    pk_url_kwarg = "id"
+    success_url = reverse_lazy("category")
+
+    def get_success_url(self):
+        messages.success(self.request,"Category Updated Successfully")
+        return super().get_success_url()
+
 
 # delete category:
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def delete_category(request,id):
-    category = Category.objects.get(id=id)
-    category.delete()
-    messages.success(request,"Category Delete Successfully")
-    return redirect("category")
+@method_decorator(create_decorator , name="dispatch")
+class DeleteCategoryView(DeleteView):
+    model = Category
+    template_name = "confirm.html"
+    pk_url_kwarg ="id"
+    success_url = reverse_lazy("category")
+
+    def get_success_url(self):
+        messages.success(self.request,"Category Delete Successfully")
+        return super().get_success_url()
+
+
 
