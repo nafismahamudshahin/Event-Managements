@@ -1,10 +1,10 @@
 from django.urls import path
 
 # import views for render the link:
-from events.views import register_event,events_view, register_category ,editEventInfo ,deleteEvent ,category_view ,edit_category , delete_category
+from events.views import RegisterEventView,events_view, register_category ,editEventInfo ,deleteEvent ,category_view ,edit_category , delete_category
 urlpatterns = [
     path('category/',category_view,name="category"),
-    path('create-event/',register_event , name="create-event"),
+    path('create-event/',RegisterEventView.as_view() , name="create-event"),
     path('events/',events_view,name="all-events"),
     path('create-category/',register_category,name="create-category"),
     path('edit-event/<int:id>/', editEventInfo , name="edit-event"),

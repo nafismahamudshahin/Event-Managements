@@ -1,26 +1,37 @@
 from django.shortcuts import render ,redirect
+from django.utils.decorators import method_decorator
 from django.db.models import Q , Count
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required ,  user_passes_test
 from core.views import is_admin_or_organizer
+
 # import Register form from from.py:
+
 from events.forms import CreateEventFrom , MakeCategoryFrom 
 from core.views import is_admin , is_organizer, is_user , is_admin_or_organizer , send_mail_to_user
 # import Model:
 from events.models import Event ,Category
+from django.views.generic import CreateView
 
-# Create your views here.
-@user_passes_test(is_admin_or_organizer, login_url="no-access-page")
-def register_event(request):
-    if request.method == "POST":
-        form = CreateEventFrom(request.POST , request.FILES)
-        if form.is_valid():
-            form.save()
-        messages.success(request,"Event Register Successfully")
-        return redirect('dashboard')
-    else:
-        form = CreateEventFrom()
-    return render(request,'forms/event_form.html',{'form':form,"form_title":"Event Register"})
+create_decorator = [login_required,user_passes_test(is_admin_or_organizer, login_url="no-permission")]
+
+@method_decorator(create_decorator , name="dispatch")
+class RegisterEventView(CreateView):
+    model = Event
+    form_class = CreateEventFrom
+    template_name = "forms/event_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = "Event Register"
+        return context
+    
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request,"Event Register Successfully")
+        return redirect("dashboard")
+        
+    
 
 # view events:
 @login_required
