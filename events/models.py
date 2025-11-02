@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.conf import settings
 # Create your models here.
 class Category(models.Model):
     name = models.CharField()
@@ -16,7 +16,7 @@ class Event(models.Model):
     location = models.CharField()
     image = models.ImageField(upload_to="events_images", blank=True, null=True ,default="events_images/default_img.jpg")
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default=1 ,related_name="category")
-    participant = models.ManyToManyField(User, related_name="rsvp_event")
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="rsvp_event")
     def __str__(self):
         return self.name
 

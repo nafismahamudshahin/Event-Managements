@@ -6,12 +6,13 @@ from datetime import datetime
 from django.contrib import messages
 from events.models import Event,Participant , Category
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required , user_passes_test
 from core.views import is_admin , is_organizer, is_user , is_admin_or_organizer , send_mail_to_user
 # chenged here
 
-
+User = get_user_model()
 # view Participant:
 @user_passes_test(is_admin, login_url="no-access-page")
 def participant(request):

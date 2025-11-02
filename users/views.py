@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect , HttpResponse
-from django.contrib.auth.models import User , Group
+from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import login , logout
 from users.forms import UserRegisterForm , UserLoginForm
@@ -10,7 +10,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required ,  user_passes_test
 from users.forms import ChangeRoleForm , GroupForm
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # import Register form from from.py:
 from events.models import  Event
 

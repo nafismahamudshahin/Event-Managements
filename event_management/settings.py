@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-9o&z5v66lkt#y68^8z+7fnk0+ijw8t2ag*eh@o@4p=8389(!rn
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = "users.CustomUser"
 ALLOWED_HOSTS = ['*'] # for deploy
 CSRF_TRUSTED_ORIGINS =['https://*.onrender.com','http://127.0.0.1:8000']
 
@@ -87,9 +87,10 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://neondb_owner:npg_yjd0Oqz2xmRV@ep-mute-hat-a1lek8s9-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+        default='postgresql://neondb_owner:npg_eBOE0VvLyAf5@ep-long-feather-adzinrt7-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
         conn_max_age=600
     )
+    
 }
 
 
