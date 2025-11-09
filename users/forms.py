@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import Permission , Group
-from django.contrib.auth.forms import AuthenticationForm , PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm , PasswordChangeForm , PasswordResetForm  , SetPasswordForm
+from django.contrib.auth.views import PasswordResetDoneView
 from django.contrib.auth import authenticate
 from users.models import CustomUser
 from django.contrib.auth import get_user_model
@@ -135,4 +136,10 @@ class GroupForm(StyledFormMixinextra ,forms.Form):
     )
 
 class CustomPasswordChangeForm(StyledFormMixinextra ,PasswordChangeForm):
+    pass
+
+class CustomPasswordResetForm(StyledFormMixinextra ,PasswordResetForm):
+    pass
+
+class CustomPasswordConfirmForm(StyledFormMixinextra , SetPasswordForm):
     pass
