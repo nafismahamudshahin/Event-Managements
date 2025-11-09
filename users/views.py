@@ -10,10 +10,10 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required ,  user_passes_test
 from django.shortcuts import get_object_or_404
-from django.contrib.auth import get_user_model
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView , PasswordResetView
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 # import Register form from from.py:

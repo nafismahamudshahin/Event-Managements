@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from users.models import CustomUser
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
 class StyledFormMixinextra:
     """ Mixing to apply style to form field"""
 

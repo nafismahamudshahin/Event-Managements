@@ -5,7 +5,6 @@ from django.utils import timezone
 from datetime import datetime
 from django.contrib import messages
 from events.models import Event,Participant , Category
-from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required , user_passes_test
