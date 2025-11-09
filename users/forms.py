@@ -1,8 +1,10 @@
 from django import forms
-from django.contrib.auth.models import User , Permission , Group
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Permission , Group
+from django.contrib.auth.forms import AuthenticationForm , PasswordChangeForm
 from django.contrib.auth import authenticate
 from users.models import CustomUser
+from django.contrib.auth import get_user_model
+User = get_user_model()
 class StyledFormMixinextra:
     """ Mixing to apply style to form field"""
 
@@ -130,3 +132,6 @@ class GroupForm(StyledFormMixinextra ,forms.Form):
         widget=forms.CheckboxSelectMultiple,
         label="Select Permissions"
     )
+
+class CustomPasswordChangeForm(StyledFormMixinextra ,PasswordChangeForm):
+    pass

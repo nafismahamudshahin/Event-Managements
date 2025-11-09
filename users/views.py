@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect , HttpResponse
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import login , logout
-from users.forms import UserRegisterForm , UserLoginForm , ChangeRoleForm , GroupForm , EditUserProfileForm
+from users.forms import UserRegisterForm , UserLoginForm , ChangeRoleForm , GroupForm , EditUserProfileForm , CustomPasswordChangeForm
 from users.models import CustomUser
 from core.views import is_admin , is_organizer, is_user , is_admin_or_organizer , send_mail_to_user
 from django.db.models import Q , Count
@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
 
 User = get_user_model()
 # import Register form from from.py:
@@ -273,3 +274,9 @@ class EditProfileView(UpdateView):
 
     def get_object(self):
         return self.request.user
+
+class CustomChangePasswordView(PasswordChangeView):
+    model = CustomUser
+    form_class = CustomPasswordChangeForm
+    success_url = reverse_lazy('profile')
+    template_name = "user/change_password_form.html"
