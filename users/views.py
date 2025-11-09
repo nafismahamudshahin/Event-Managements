@@ -266,6 +266,7 @@ def profile(request):
     }
     return render(request,"profile.html",context)
 
+# Edit user profile:
 class EditProfileView(UpdateView):
     model = CustomUser
     form_class = EditUserProfileForm
@@ -274,7 +275,8 @@ class EditProfileView(UpdateView):
 
     def get_object(self):
         return self.request.user
-
+    
+# change user password
 class CustomChangePasswordView(PasswordChangeView):
     model = CustomUser
     form_class = CustomPasswordChangeForm
