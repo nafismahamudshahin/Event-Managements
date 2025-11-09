@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User , Permission , Group
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from users.models import CustomUser
 class StyledFormMixinextra:
     """ Mixing to apply style to form field"""
 
@@ -46,6 +47,10 @@ class StyledFormMixinextra:
                 field.widget.attrs.update({
                     'class': self.default_classes
                 })
+class EditUserProfileForm(StyledFormMixinextra, forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username','first_name','last_name','email','phone_number','bio','profile_photo']
 
 class UserRegisterForm(StyledFormMixinextra , forms.ModelForm):
     password  = forms.CharField(widget=forms.PasswordInput , label="password")
